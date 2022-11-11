@@ -16,7 +16,12 @@ class AuthController extends Controller
 			'email'    => $request->email,
 			'password' => $request->password,
 		]);
-		return response()->json('User successfully registered!', 200);
+		$token = auth()->attempt($request->validated());
+		if (!$token)
+		{
+			return response()->json(['error' => 'Not registered!'], 404);
+		}
+		return $this->respondWithToken($token);
 	}
 
 	public function login(StoreLoginRequest $request)
