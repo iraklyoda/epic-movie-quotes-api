@@ -11,11 +11,11 @@ class AuthController extends Controller
 {
 	public function register(StoreUserRequest $request): JsonResponse
 	{
-		User::create([
+		$user = User::create([
 			'username' => $request->username,
 			'email'    => $request->email,
 			'password' => $request->password,
-		]);
+		])->sendEmailVerificationNotification();
 		$token = auth()->attempt($request->validated());
 		if (!$token)
 		{
