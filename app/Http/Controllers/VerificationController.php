@@ -13,15 +13,13 @@ class VerificationController extends Controller
 		{
 			return response()->json(['msg' => 'Invalid/Expired url provided.'], 401);
 		}
-
 		$user = User::findOrFail($user_id);
 
 		if (!$user->hasVerifiedEmail())
 		{
 			$user->markEmailAsVerified();
 		}
-
-		return redirect()->to('/');
+		return redirect(env('VITE_APP_ROOT'));
 	}
 
 	public function resend()

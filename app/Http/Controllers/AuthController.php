@@ -9,19 +9,13 @@ use Illuminate\Http\JsonResponse;
 
 class AuthController extends Controller
 {
-	public function register(StoreUserRequest $request): JsonResponse
+	public function register(StoreUserRequest $request)
 	{
 		$user = User::create([
 			'username' => $request->username,
 			'email'    => $request->email,
 			'password' => $request->password,
 		])->sendEmailVerificationNotification();
-		$token = auth()->attempt($request->validated());
-		if (!$token)
-		{
-			return response()->json(['error' => 'Not registered!'], 404);
-		}
-		return $this->respondWithToken($token);
 	}
 
 	public function login(StoreLoginRequest $request)
