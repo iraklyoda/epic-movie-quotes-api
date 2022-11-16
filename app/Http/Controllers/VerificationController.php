@@ -19,7 +19,7 @@ class VerificationController extends Controller
 		{
 			$user->markEmailAsVerified();
 		}
-		return redirect(env('VITE_APP_ROOT'));
+		return redirect(env('VITE_APP_ROOT') . '?verified=yes');
 	}
 
 	public function resend()
