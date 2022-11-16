@@ -22,6 +22,7 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail, CanRe
 		'username',
 		'email',
 		'password',
+		'google_id',
 	];
 
 	protected $hidden = [
