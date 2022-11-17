@@ -26,7 +26,6 @@ class AuthController extends Controller
 		$request->merge([
 			$login_type => $request->input('username'),
 		]);
-
 		$token = auth()->attempt($request->only($login_type, 'password'));
 
 		if (!$token)
@@ -36,21 +35,11 @@ class AuthController extends Controller
 		return $this->respondWithToken($token);
 	}
 
-//    public function user(): JsonResponse
-//    {
-//        return response()->json(auth()->user(), 200);
-//    }
-//
 	public function logout(): JsonResponse
 	{
 		auth()->logout();
 		return response()->json(['message' => 'Successfully logged out']);
 	}
-//
-//    public function refresh(): JsonResponse
-//    {
-//        return $this->respondWithToken(auth()->refresh());
-//    }
 
 	private function respondWithToken(string $token): JsonResponse
 	{
