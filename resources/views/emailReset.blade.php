@@ -1,6 +1,5 @@
 @props([
     'url',
-    'user',
 ])
 
     <!doctype html>
@@ -18,11 +17,11 @@
     <h2>MOVIE QUOTES</h2>
 </header>
 <main>
-    <p>Hola {{$user}}</p>
-    <p>Thanks for joining Movie quotes! We really appreciate it. Please click the button below to verify your account:</p>
-    <button><a href="{{$url}}">Verify account</a></button>
+    <p>Hola</p>
+    <p>You are receiving this email because we received a password reset request for your account.</p>
+    <button><a href="{{$url}}">Reset Password</a></button>
     <p>If clicking doesn't work, you can try copying and pasting it to your browser:</p>
-    <p class="max-width">https://moviequotes/verify?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdHYiOjIsImp0aSI6ImRkNTVkMTM1LTFhMGEtNDBjNi04NDQ5LThmZjdkZGFlNDc3MyIsImVtYWlsVmVyaWZpZWQiOmZhbHNlLCJpYXQiOjE2MDE2NzIxMIyYjk2NDNhNjdjNjU1NmQ5MSJ9.ok1qXOM-RY9_x2_xKjDj2aK6NG9w9xAMcDpchUnbn4c</p>
+    <p class="max-width">{{$url}}</p>
     <p>If you have any problems, please contact us: support@moviequotes.ge</p>
     <p>MovieQuotes Crew</p>
 </main>

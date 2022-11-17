@@ -20,9 +20,9 @@ Route::get('/', function () {
 
 Route::get('/send-notification', function () {
 	User::create([
-		'username' => 'irakliiiii',
-		'email'    => 'irakli@irakkliii.ge',
-		'password' => 'irakliiiii',
+		'username' => 'iraklii',
+		'email'    => 'irakli@iraklii.ge',
+		'password' => 'iraklii',
 	])->sendEmailVerificationNotification();
-	return redirect()->back();
+	return redirect('/');
 });
