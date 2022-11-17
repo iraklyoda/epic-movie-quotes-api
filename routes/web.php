@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,13 +15,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 	return view('welcome');
-});
-
-Route::get('/send-notification', function () {
-	User::create([
-		'username' => 'iraklii',
-		'email'    => 'irakli@iraklii.ge',
-		'password' => 'iraklii',
-	])->sendEmailVerificationNotification();
-	return redirect('/');
 });
