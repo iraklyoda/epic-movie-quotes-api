@@ -17,8 +17,9 @@ class MoviesController extends Controller
 		}
 
 		$movie = Movie::create([
-			'image' => '/storage/' . $file_path,
-			'title' => [
+			'image'  => '/storage/' . $file_path,
+			'genres' => $request->genres,
+			'title'  => [
 				'en', $request->title_en,
 				'ka', $request->title_ka,
 			],
