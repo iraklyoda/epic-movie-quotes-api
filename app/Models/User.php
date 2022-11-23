@@ -8,9 +8,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable implements JWTSubject, MustVerifyEmail, CanResetPassword
+class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
 {
 	use HasApiTokens;
 
@@ -44,13 +43,9 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail, CanRe
 		return $this->getKey();
 	}
 
-	/**
+	/*
 	 * Return a key value array, containing any custom claims to be added to the JWT.
 	 *
 	 * @return array
 	 */
-	public function getJWTCustomClaims()
-	{
-		return [];
-	}
 }

@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['controller' => AuthController::class], function () {
 	Route::post('/register', 'register')->name('auth.register');
 	Route::post('/login', 'login')->name('auth.login');
+	Route::get('/me', 'me')->middleware('jwt.auth')->name('me');
 	Route::post('/logout', 'logout')->name('auth.logout');
 });
 
@@ -29,14 +30,14 @@ Route::group(['controller' => GoogleController::class, 'middleware' => 'web'], f
 	Route::get('google/callback', 'callbackFromGoogle')->name('google.callback');
 });
 
-Route::group(['controller' => VerificationController::class], function () {
+Route::group(['controller' => VerificationController::class, 'middleware' => 'jwt.auth'], function () {
 	Route::get('/email/verify/{id}', 'verify')->name('verification.verify'); // Make sure to keep this as your route name
 	Route::get('/email/resend', 'resend')->name('verification.resend');
 });
 
-Route::group(['controller' => ResetPasswordController::class], function () {
+Route::group(['controller' => ResetPasswordController::class, 'middleware' => 'jwt.auth'], function () {
 	Route::post('forgot-password', 'resetRequest')->name('password.email');
 	Route::get('/reset-password/{token}', 'resetPassword')->name('password.reset');
 	Route::post('/reset-password', 'updatePassword')->name('password.update');
 });
-Route::post('/movies/create', [MoviesController::class, 'store'])->name('posts.create');
+Route::post('/movies/create', [MoviesController::class, 'store'])->middleware('jwt . auth')->name('posts.create');
