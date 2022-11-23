@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\MoviesController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\VerificationController;
 use Illuminate\Support\Facades\Route;
@@ -38,3 +39,4 @@ Route::group(['controller' => ResetPasswordController::class], function () {
 	Route::get('/reset-password/{token}', 'resetPassword')->name('password.reset');
 	Route::post('/reset-password', 'updatePassword')->name('password.update');
 });
+Route::post('/movies/create', [MoviesController::class, 'store'])->name('posts.create');
