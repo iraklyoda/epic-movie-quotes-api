@@ -3,21 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+use Firebase\JWT\JWT;
 use Laravel\Socialite\Facades\Socialite;
 
 class GoogleController extends Controller
 {
 	public function loginWithGoogle()
 	{
-		return Socialite::driver('google')->redirect();
+		return Socialite::driver('google')->stateless()->redirect();
 	}
 
 	public function callbackFromGoogle()
 	{
 		try
 		{
-			$google_user = Socialite::driver('google')->user();
+			$google_user = Socialite::driver('google')->stateless()->user();
 
 			// Check Users Email If Already There
 			$user = User::where('google_id', $google_user->getEmail())->first();
@@ -29,15 +30,23 @@ class GoogleController extends Controller
 					'username'     => $google_user->getName(),
 					'email'        => $google_user->getEmail(),
 				]);
-				$token = Auth::login($new_user);
-				$expires_in = auth()->factory()->getTTL() * 60;
-				return redirect(env('VITE_APP_ROOT') . '?token=' . $token . '&expires=' . $expires_in);
+				$payload = [
+					'exp' => Carbon::now()->addDays(2)->timestamp,
+					'uid' => User::where('username', '=', $google_user->getName())->first()->id,
+				];
+				$jwt = JWT::encode($payload, config('auth.jwt_secret'), 'HS256');
+				$cookie = cookie('access_token', $jwt, 30, '/', config('auth.front_end_top_level_domain'), true, true, false, 'Strict');
+				return redirect(env('VITE_APP_ROOT'))->withCookie($cookie);
 			}
 			else
 			{
-				$token = Auth::login($user);
-				$expires_in = auth()->factory()->getTTL() * 60;
-				return redirect(env('VITE_APP_ROOT') . '?token=' . $token . '&expires=' . $expires_in);
+				$payload = [
+					'exp' => Carbon::now()->addDays(2)->timestamp,
+					'uid' => User::where('username', '=', $google_user->getName())->first()->id,
+				];
+				$jwt = JWT::encode($payload, config('auth.jwt_secret'), 'HS256');
+				$cookie = cookie('access_token', $jwt, 30, '/', config('auth.front_end_top_level_domain'), true, true, false, 'Strict');
+				return redirect(env('VITE_APP_ROOT'))->withCookie($cookie);
 			}
 		}
 		catch (\Throwable $th)

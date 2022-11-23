@@ -16,6 +16,7 @@ class StoreLoginRequest extends FormRequest
 		return [
 			'username'       => ['required'],
 			'password'       => ['required'],
+			'remember_me'    => ['boolean'],
 		];
 	}
 }

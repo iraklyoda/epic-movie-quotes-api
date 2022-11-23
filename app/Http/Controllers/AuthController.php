@@ -34,11 +34,11 @@ class AuthController extends Controller
 		{
 			return response()->json(['error' => 'Wrong email or password!'], 404);
 		}
-
 		$payload = [
-			'exp' => Carbon::now()->addDays(2)->timestamp,
+			'exp' => Carbon::now()->addDays($request->remember_me ? 2 : 1)->timestamp,
 			'uid' => User::where('username', '=', $request->username)->first()->id,
 		];
+
 		$jwt = JWT::encode($payload, config('auth.jwt_secret'), 'HS256');
 		$cookie = cookie('access_token', $jwt, 30, '/', config('auth.front_end_top_level_domain'), true, true, false, 'Strict');
 		return response()->json('success', 200)->withCookie($cookie);
@@ -46,8 +46,8 @@ class AuthController extends Controller
 
 	public function logout(): JsonResponse
 	{
-		auth()->logout();
-		return response()->json(['message' => 'Successfully logged out']);
+		$cookie = cookie('access_token', '', 0, '/', config('auth.front_end_top_level_domain'), true, true, false, 'Strict');
+		return response()->json('success', 200)->withCookie($cookie);
 	}
 
 	private function respondWithToken(string $token): JsonResponse

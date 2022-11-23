@@ -22,10 +22,10 @@ Route::group(['controller' => AuthController::class], function () {
 	Route::post('/register', 'register')->name('auth.register');
 	Route::post('/login', 'login')->name('auth.login');
 	Route::get('/me', 'me')->middleware('jwt.auth')->name('me');
-	Route::post('/logout', 'logout')->name('auth.logout');
+	Route::get('/logout', 'logout')->middleware('jwt.auth')->name('auth.logout');
 });
 
-Route::group(['controller' => GoogleController::class, 'middleware' => 'web'], function () {
+Route::group(['controller' => GoogleController::class], function () {
 	Route::get('google/login', 'loginWithGoogle')->name('google.login');
 	Route::get('google/callback', 'callbackFromGoogle')->name('google.callback');
 });
@@ -40,4 +40,6 @@ Route::group(['controller' => ResetPasswordController::class, 'middleware' => 'j
 	Route::get('/reset-password/{token}', 'resetPassword')->name('password.reset');
 	Route::post('/reset-password', 'updatePassword')->name('password.update');
 });
-Route::post('/movies/create', [MoviesController::class, 'store'])->middleware('jwt . auth')->name('posts.create');
+
+Route::post('/movies/create', [MoviesController::class, 'create'])->name('posts.create');
+Route::get('/movies/read', [MoviesController::class, 'read'])->middleware('jwt.auth')->name('posts.read');

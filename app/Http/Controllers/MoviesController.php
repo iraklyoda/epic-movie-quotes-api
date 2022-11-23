@@ -7,7 +7,7 @@ use App\Models\Movie;
 
 class MoviesController extends Controller
 {
-	public function store(StoreMovieRequest $request)
+	public function create(StoreMovieRequest $request)
 	{
 		$file_path = '';
 		if ($request->file('image'))
@@ -33,5 +33,11 @@ class MoviesController extends Controller
 			],
 		]);
 		return 'Done: ' . $file_name . '. ' . $file_path;
+	}
+
+	public function read()
+	{
+		$movies = Movie::all();
+		return response()->json($movies);
 	}
 }
