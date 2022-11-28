@@ -36,6 +36,6 @@ class QuotesController extends Controller
 	public function readMovieQuotes(Movie $movie)
 	{
 		$quotes = $movie->quotes();
-		return response()->json($quotes);
+		return response()->json($movie->quotes);
 	}
 }
