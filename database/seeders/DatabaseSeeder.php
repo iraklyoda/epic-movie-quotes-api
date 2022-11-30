@@ -18,19 +18,19 @@ class DatabaseSeeder extends Seeder
 	public function run()
 	{
 		User::truncate();
-		Movie::truncate();
-		Quote::truncate();
+		Movie::query()->delete();
 
-		User::create([
+		$user = User::create([
 			'username' => 'irakli',
 			'email'    => 'irakli@irakli.ge',
 			'password' => 'irakliirakli',
 		]);
 
 		$shrek = Movie::create([
-			'image'  => '/storage/images/movies/shrek.jpg',
-			'genres' => json_encode(['Animation', 'Family']),
-			'title'  => [
+			'image'   => '/storage/images/movies/shrek.jpg',
+			'genres'  => json_encode(['Animation', 'Family']),
+			'user_id' => $user->id,
+			'title'   => [
 				'en' => 'Shrek',
 				'ka' => 'შრეკი',
 			],
@@ -44,9 +44,10 @@ class DatabaseSeeder extends Seeder
 			],
 		]);
 		$sevenSamurai = Movie::create([
-			'image'  => '/storage/images/movies/seven_samurai.jpg',
-			'genres' => json_encode(['Action', 'Adventure', 'Epic']),
-			'title'  => [
+			'image'   => '/storage/images/movies/seven_samurai.jpg',
+			'genres'  => json_encode(['Action', 'Adventure', 'Epic']),
+			'user_id' => $user->id,
+			'title'   => [
 				'en' => 'Seven Samurai',
 				'ka' => 'შვიდი სამურაი',
 			],
@@ -60,9 +61,10 @@ class DatabaseSeeder extends Seeder
 			],
 		]);
 		$harakiri = Movie::create([
-			'image'  => '/storage/images/movies/harakiri.jpg',
-			'genres' => json_encode(['Drama', 'Epic', 'Jidaigeki']),
-			'title'  => [
+			'image'   => '/storage/images/movies/harakiri.jpg',
+			'genres'  => json_encode(['Drama', 'Epic', 'Jidaigeki']),
+			'user_id' => $user->id,
+			'title'   => [
 				'en' => 'Harakiri',
 				'ka' => 'ჰარაკირი',
 			],

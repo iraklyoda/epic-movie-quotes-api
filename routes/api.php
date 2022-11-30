@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\QuoteCommentsController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\MoviesController;
 use App\Http\Controllers\QuotesController;
@@ -43,14 +44,22 @@ Route::group(['controller' => ResetPasswordController::class, 'middleware' => 'j
 });
 
 Route::group(['controller' => MoviesController::class], function () {
-	Route::post('/movies/create', 'create')->middleware('jwt.auth')->name('movie.create');
+	Route::post('/movies/create', 'create')->name('movie.create');
 	Route::get('/movies/read', 'read')->middleware('jwt.auth')->name('movies.read');
 	Route::get('/movies/movie/{movie:id}', 'show')->middleware('jwt.auth')->name('movie.show');
 	Route::post('/movies/movie/{movie:id}', 'update')->name('movie.update');
+	Route::post('/movies/movie/delete/{movie:id}', 'destroy')->name('movie.delete');
 });
 
 Route::group(['controller' => QuotesController::class], function () {
 	Route::post('/quotes/create', 'create')->name('quotes.create');
 	Route::get('/quotes/read', 'read')->middleware('jwt.auth')->name('quotes.read');
+	Route::get('/quotes/quote/{quote:id}', 'show')->middleware('jwt.auth')->name('quote.show');
+	Route::post('/quotes/quote/{quote:id}', 'update')->name('quote.update');
 	Route::get('/quotes/movie/{movie:id}', 'readMovieQuotes')->middleware('jwt.auth')->name('movie_quotes.read');
+	Route::post('/quotes/quote/delete/{quote:id}', 'destroy')->name('quote.delete');
+});
+
+Route::group(['controller' => QuoteCommentsController::class], function () {
+	Route::post('/quotes/{quote:id}/comments', 'create')->name('quote_comment.create');
 });

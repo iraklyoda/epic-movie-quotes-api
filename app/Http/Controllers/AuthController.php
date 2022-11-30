@@ -64,7 +64,7 @@ class AuthController extends Controller
 		return response()->json(
 			[
 				'message' => 'authenticated successfully',
-				//				'user'    => jwtUser(),
+				'user'    => jwtUser(),
 			],
 			200
 		);

@@ -18,9 +18,10 @@ class MoviesController extends Controller
 		}
 
 		$movie = Movie::create([
-			'image'  => '/storage/' . $file_path,
-			'genres' => $request->genres,
-			'title'  => [
+			'image'   => '/storage/' . $file_path,
+			'user_id' => jwtUser()->id,
+			'genres'  => $request->genres,
+			'title'   => [
 				'en' => $request->title_en,
 				'ka' => $request->title_ka,
 			],
@@ -63,12 +64,19 @@ class MoviesController extends Controller
 
 	public function read()
 	{
-		$movies = Movie::all();
+		$movies = Movie::where('user_id', JwtUser()->id)->orderBy('id', 'desc')->with('quotes')->get();
 		return response()->json($movies);
 	}
 
 	public function show(Movie $movie)
 	{
+		$movie->genres = json_decode($movie->genres, true);
 		return response()->json($movie);
+	}
+
+	public function destroy(Movie $movie)
+	{
+		$movie->delete();
+		return response();
 	}
 }

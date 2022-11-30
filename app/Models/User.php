@@ -43,6 +43,11 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
 		return $this->getKey();
 	}
 
+	public function movies()
+	{
+		return $this->hasMany(Movie::class);
+	}
+
 	/*
 	 * Return a key value array, containing any custom claims to be added to the JWT.
 	 *
