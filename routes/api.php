@@ -32,7 +32,7 @@ Route::group(['controller' => GoogleController::class], function () {
 	Route::get('google/callback', 'callbackFromGoogle')->name('google.callback');
 });
 
-Route::group(['controller' => VerificationController::class, 'middleware' => 'jwt.auth'], function () {
+Route::group(['controller' => VerificationController::class], function () {
 	Route::get('/email/verify/{id}', 'verify')->name('verification.verify'); // Make sure to keep this as your route name
 	Route::get('/email/resend', 'resend')->name('verification.resend');
 });

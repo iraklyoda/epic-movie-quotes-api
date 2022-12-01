@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Notifications\VerifyEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -46,6 +47,11 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
 	public function movies()
 	{
 		return $this->hasMany(Movie::class);
+	}
+
+	public function sendEmailVerificationNotification()
+	{
+		$this->notify(new VerifyEmail());
 	}
 
 	/*
