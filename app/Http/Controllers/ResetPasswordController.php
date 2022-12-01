@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreEmailRequest;
 use App\Http\Requests\StorePasswordResetRequest;
-use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 
@@ -42,7 +41,6 @@ class ResetPasswordController extends Controller
 					'password' => $password,
 				])->setRememberToken(Str::random(60));
 				$user->save();
-				event(new ResetPassword($user));
 			}
 		);
 		return $status === Password::PASSWORD_RESET

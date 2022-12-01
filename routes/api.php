@@ -37,7 +37,7 @@ Route::group(['controller' => VerificationController::class], function () {
 	Route::get('/email/resend', 'resend')->name('verification.resend');
 });
 
-Route::group(['controller' => ResetPasswordController::class, 'middleware' => 'jwt.auth'], function () {
+Route::group(['controller' => ResetPasswordController::class], function () {
 	Route::post('forgot-password', 'resetRequest')->name('password.email');
 	Route::get('/reset-password/{token}', 'resetPassword')->name('password.reset');
 	Route::post('/reset-password', 'updatePassword')->name('password.update');
