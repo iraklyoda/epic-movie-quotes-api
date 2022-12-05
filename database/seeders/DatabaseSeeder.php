@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Movie;
+use App\Models\Notification;
 use App\Models\Quote;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -19,10 +20,17 @@ class DatabaseSeeder extends Seeder
 	{
 		User::truncate();
 		Movie::query()->delete();
+		Notification::query()->delete();
 
 		$user = User::create([
 			'username' => 'irakli',
 			'email'    => 'irakli@irakli.ge',
+			'password' => 'irakliirakli',
+		]);
+
+		$user_two = User::create([
+			'username' => 'yoda',
+			'email'    => 'yoda@irakli.ge',
 			'password' => 'irakliirakli',
 		]);
 
@@ -46,7 +54,7 @@ class DatabaseSeeder extends Seeder
 		$sevenSamurai = Movie::create([
 			'image'   => '/storage/images/movies/seven_samurai.jpg',
 			'genres'  => json_encode(['Action', 'Adventure', 'Epic']),
-			'user_id' => $user->id,
+			'user_id' => $user_two->id,
 			'title'   => [
 				'en' => 'Seven Samurai',
 				'ka' => 'შვიდი სამურაი',
@@ -79,6 +87,7 @@ class DatabaseSeeder extends Seeder
 		]);
 
 		Quote::create([
+			'user_id'  => $user->id,
 			'movie_id' => $shrek->id,
 			'quote'    => [
 				'en' => 'Ogres are like onions',
@@ -88,6 +97,7 @@ class DatabaseSeeder extends Seeder
 		]);
 
 		Quote::create([
+			'user_id'  => $user->id,
 			'movie_id' => $harakiri->id,
 			'quote'    => [
 				'en' => 'The suspicious mind conjures its own demons.',
@@ -96,6 +106,7 @@ class DatabaseSeeder extends Seeder
 			'thumbnail' => '/storage/images/quotes/harakiri_suspicious.jpg',
 		]);
 		Quote::create([
+			'user_id'  => $user->id,
 			'movie_id' => $harakiri->id,
 			'quote'    => [
 				'en' => 'After all, this thing we call samurai honor is ultimately nothing but a facade',
@@ -104,6 +115,7 @@ class DatabaseSeeder extends Seeder
 			'thumbnail' => '/storage/images/quotes/harakiri_facade.jpeg',
 		]);
 		Quote::create([
+			'user_id'  => $user_two->id,
 			'movie_id' => $sevenSamurai->id,
 			'quote'    => [
 				'en' => "Don't you see? A real sword will kill you",
@@ -112,6 +124,7 @@ class DatabaseSeeder extends Seeder
 			'thumbnail' => '/storage/images/quotes/seven_samurai_sword.png',
 		]);
 		Quote::create([
+			'user_id'  => $user->id,
 			'movie_id' => $harakiri->id,
 			'quote'    => [
 				'en' => 'Swordsmanship untested in battle is like the art of swimming mastered on land.',

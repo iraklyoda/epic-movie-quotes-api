@@ -12,9 +12,14 @@ class Quote extends Model
 
 	protected $guarded = ['id'];
 
-	protected $with = ['movie'];
+	protected $with = ['movie', 'comments', 'likes'];
 
 	public $translatable = ['quote'];
+
+	public function author()
+	{
+		return $this->belongsTo(User::class, 'user_id');
+	}
 
 	public function movie()
 	{
@@ -24,5 +29,10 @@ class Quote extends Model
 	public function comments()
 	{
 		return $this->hasMany(Comment::class);
+	}
+
+	public function likes()
+	{
+		return $this->hasMany(Like::class);
 	}
 }

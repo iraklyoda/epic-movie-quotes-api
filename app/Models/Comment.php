@@ -11,6 +11,8 @@ class Comment extends Model
 
 	protected $guarded = [];
 
+	protected $with = ['author'];
+
 	public function quote()
 	{
 		return $this->belongsTo(Quote::class);

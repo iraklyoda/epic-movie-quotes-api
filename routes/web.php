@@ -17,4 +17,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
 	return view('welcome');
 });
+
 Route::post('/movies/create', [MoviesController::class, 'store'])->name('posts.create');

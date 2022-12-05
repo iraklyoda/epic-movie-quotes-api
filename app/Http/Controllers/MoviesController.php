@@ -20,7 +20,7 @@ class MoviesController extends Controller
 		$movie = Movie::create([
 			'image'   => '/storage/' . $file_path,
 			'user_id' => jwtUser()->id,
-			'genres'  => $request->genres,
+			'genres'  => json_encode($request->genres),
 			'title'   => [
 				'en' => $request->title_en,
 				'ka' => $request->title_ka,
@@ -71,7 +71,11 @@ class MoviesController extends Controller
 	public function show(Movie $movie)
 	{
 		$movie->genres = json_decode($movie->genres, true);
-		return response()->json($movie);
+		return response()->json($movie->load([
+			'quotes' => function ($query) {
+				$query->orderBy('id', 'desc');
+			},
+		]));
 	}
 
 	public function destroy(Movie $movie)

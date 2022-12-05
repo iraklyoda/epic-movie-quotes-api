@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\LikesController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\QuoteCommentsController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\MoviesController;
@@ -23,6 +25,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['controller' => AuthController::class], function () {
 	Route::post('/register', 'register')->name('auth.register');
 	Route::post('/login', 'login')->name('auth.login');
+	Route::post('/profile/update-username', 'updateUsername')->middleware('jwt.auth')->name('auth.update_username');
 	Route::get('/me', 'me')->middleware('jwt.auth')->name('me');
 	Route::get('/logout', 'logout')->middleware('jwt.auth')->name('auth.logout');
 });
@@ -61,5 +64,14 @@ Route::group(['controller' => QuotesController::class], function () {
 });
 
 Route::group(['controller' => QuoteCommentsController::class], function () {
-	Route::post('/quotes/{quote:id}/comments', 'create')->name('quote_comment.create');
+	Route::post('/quotes/{quote:id}/comments/', 'create')->name('quote_comment.create');
+});
+
+Route::group(['controller' => NotificationController::class], function () {
+	Route::get('/notifications', 'read')->name('notifications.read');
+	Route::post('/notifications/mark-read', 'markRead')->name('notifications.mark_read');
+});
+
+Route::group(['controller' => LikesController::class], function () {
+	Route::post('/quote/{quote:id}/like', 'create')->name('like.create');
 });

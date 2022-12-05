@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreLoginRequest;
+use App\Http\Requests\StoreUsernameUpdateRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
 use Carbon\Carbon;
@@ -57,6 +58,14 @@ class AuthController extends Controller
 			'token_type'   => 'bearer',
 			'expires_in'   => auth()->factory()->getTTL() * 60,
 		]);
+	}
+
+	public function updateUsername(StoreUsernameUpdateRequest $request)
+	{
+		$user = JwtUser();
+		$user->username = $request->username;
+		$user->save();
+		return response()->json('works');
 	}
 
 	public function me(): JsonResponse

@@ -19,6 +19,7 @@ class QuotesController extends Controller
 		}
 		Quote::create([
 			'movie_id' => $request->movie_id,
+			'user_id'  => jwtUser()->id,
 			'quote'    => [
 				'en' => $request->quote_en,
 				'ka' => $request->quote_ka,
@@ -46,7 +47,7 @@ class QuotesController extends Controller
 
 	public function read()
 	{
-		$quotes = Quote::with('comments')->orderBy('created_at', 'desc')->get();
+		$quotes = Quote::with('comments')->with('likes')->orderBy('created_at', 'desc')->get();
 		return response()->json($quotes);
 	}
 
@@ -58,7 +59,7 @@ class QuotesController extends Controller
 	public function readMovieQuotes(Movie $movie)
 	{
 		$quotes = $movie->quotes;
-		return response()->json(Quote::where('movie_id', '=', $movie->id)->orderBy('created_at', 'desc')->get());
+		return response()->json(Quote::where('movie_id', '=', $movie->id)->orderBy('created_at', 'desc')->with('likes', 'comments')->get());
 	}
 
 	public function destroy(Quote $quote)
