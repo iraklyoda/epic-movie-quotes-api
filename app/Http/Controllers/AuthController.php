@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreLoginRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\StoreUserUpdateRequest;
+use App\Models\Email;
 use App\Models\User;
 use Carbon\Carbon;
 use Firebase\JWT\JWT;
@@ -31,19 +32,38 @@ class AuthController extends Controller
 		$request->merge([
 			$login_type => $request->input('username'),
 		]);
+		$authenticated = auth()->attempt($request->only($login_type, 'password'));
 		$user = auth()->user();
+		if (!$authenticated)
+		{
+			$email = Email::where('email', '=', $request->username)->first();
+			if ($email->is_email_verified === 1)
+			{
+				$email = Email::where('email', '=', $request->username)->first()->user->email;
+				$authenticated = auth()->attempt([
+					'email'    => $email,
+					'password' => $request->password,
+				]);
+				$user = auth()->user();
+			}
+			else
+			{
+				return response()->json(['error' => 'Email is not verified'], 404);
+			}
+		}
+		if (!$authenticated)
+		{
+			return response()->json(['error' => 'Wrong email or password!'], 404);
+		}
+
 		if (!$user->hasVerifiedEmail())
 		{
 			return response()->json(['error' => 'Email is not verified'], 404);
 		}
 
-		if (!$authenticated)
-		{
-			return response()->json(['error' => 'Wrong email or password!'], 404);
-		}
 		$payload = [
 			'exp' => Carbon::now()->addDays($request->remember_me ? 2 : 1)->timestamp,
-			'uid' => User::where('username', '=', $request->username)->first()->id,
+			'uid' => auth()->user()->id,
 		];
 
 		$jwt = JWT::encode($payload, config('auth.jwt_secret'), 'HS256');

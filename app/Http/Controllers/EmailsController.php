@@ -3,26 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreEmailRequest;
-use App\Models\email;
+use App\Models\Email;
 use Illuminate\Http\Request;
 
 class EmailsController extends Controller
 {
 	public function create(StoreEmailRequest $request)
 	{
-		Email::create([
+		$email = Email::create([
 			'email'   => $request->email,
 			'user_id' => jwtUser()->id,
-		])->sendEmailVerification(jwtUser()->id);
+		]);
+		jwtUser()->sendEmailVerification($email->id);
 	}
 
 	public function verify($email_id, Request $request)
 	{
-		if (!$request->hasValidSignature())
-		{
-			return response()->json(['msg' => 'Invalid/Expired url provided.'], 401);
-		}
-		$email = email::findOrFail($email_id);
+		$email = Email::findOrFail($email_id);
 
 		if (!$email->is_email_verified)
 		{

@@ -43,12 +43,13 @@ class VerifyCreatedEmail extends Notification
 	 */
 	public function toMail($notifiable)
 	{
-		$url = url('/profile/email/verify/' . $this->id);
+		$url = url('/api/profile/email/verify/' . $this->id);
 
 		return (new MailMessage)
-					->line('The introduction to the notification.')
-					->action('Notification Action', $url)
-					->line('Thank you for using our application!');
+			->view('verifyCreatedEmail', ['url' => $url])
+			->action('Notification Action', $url)
+			->line('Thank you for using our application!')
+			->subject('Verify Email Address');
 	}
 
 	/**

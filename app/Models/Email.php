@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
-use App\Notifications\VerifyCreatedEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
-class email extends Model
+class Email extends Model
 {
 	use HasFactory;
 
@@ -18,10 +17,5 @@ class email extends Model
 	public function user()
 	{
 		return $this->belongsTo(User::class, 'user_id');
-	}
-
-	public function sendEmailVerification($id)
-	{
-		$this->notify(new VerifyCreatedEmail($id));
 	}
 }
