@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['controller' => AuthController::class], function () {
 	Route::post('/register', 'register')->name('auth.register');
 	Route::post('/login', 'login')->name('auth.login');
-	Route::post('/profile/update-username', 'updateUsername')->middleware('jwt.auth')->name('auth.update_username');
+	Route::post('/profile/update-user', 'updateUser')->name('auth.update_user');
 	Route::get('/me', 'me')->middleware('jwt.auth')->name('me');
 	Route::get('/logout', 'logout')->middleware('jwt.auth')->name('auth.logout');
 });

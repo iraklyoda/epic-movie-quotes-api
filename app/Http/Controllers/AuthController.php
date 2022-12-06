@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreLoginRequest;
-use App\Http\Requests\StoreUsernameUpdateRequest;
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\StoreUserUpdateRequest;
 use App\Models\User;
 use Carbon\Carbon;
 use Firebase\JWT\JWT;
@@ -14,10 +14,12 @@ class AuthController extends Controller
 {
 	public function register(StoreUserRequest $request)
 	{
+		$default_profile_picture = '/storage/images/profile/darth_vader_default_profile.png';
 		$user = User::create([
-			'username' => $request->username,
-			'email'    => $request->email,
-			'password' => $request->password,
+			'username'        => $request->username,
+			'email'           => $request->email,
+			'password'        => $request->password,
+			'profile_picture' => $default_profile_picture,
 		])->sendEmailVerificationNotification();
 	}
 
@@ -60,12 +62,31 @@ class AuthController extends Controller
 		]);
 	}
 
-	public function updateUsername(StoreUsernameUpdateRequest $request)
+	public function updateUser(StoreUserUpdateRequest $request)
 	{
 		$user = JwtUser();
-		$user->username = $request->username;
-		$user->save();
-		return response()->json('works');
+		if ($request->username)
+		{
+			$user->username = $request->username;
+		}
+		if ($request->new_password)
+		{
+			$user->password = $request->new_password;
+		}
+		if ($request->file('profile_picture'))
+		{
+			$file_name = time() . '_' . request()->file('profile_picture')->getClientOriginalName();
+			$file_path = request()->file('profile_picture')->storeAs('images', str_replace(' ', '_', $file_name), 'public');
+			$user->profile_picture = '/storage/' . $file_path;
+		}
+		if ($user->save())
+		{
+			return response()->json('works', 200);
+		}
+		else
+		{
+			return response()->json(['error' => 'problem updating user'], 404);
+		}
 	}
 
 	public function me(): JsonResponse

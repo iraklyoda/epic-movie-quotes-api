@@ -23,15 +23,17 @@ class DatabaseSeeder extends Seeder
 		Notification::query()->delete();
 
 		$user = User::create([
-			'username' => 'irakli',
-			'email'    => 'irakli@irakli.ge',
-			'password' => 'irakliirakli',
+			'username'        => 'irakli',
+			'email'           => 'irakli@irakli.ge',
+			'password'        => 'irakliirakli',
+			'profile_picture' => '/storage/images/profile/darth_vader_default_profile.png',
 		]);
 
 		$user_two = User::create([
-			'username' => 'yoda',
-			'email'    => 'yoda@irakli.ge',
-			'password' => 'irakliirakli',
+			'username'        => 'yoda',
+			'email'           => 'yoda@irakli.ge',
+			'password'        => 'irakliirakli',
+			'profile_picture' => '/storage/images/profile/darth_vader_default_profile.png',
 		]);
 
 		$shrek = Movie::create([
