@@ -37,18 +37,21 @@ class AuthController extends Controller
 		if (!$authenticated)
 		{
 			$email = Email::where('email', '=', $request->username)->first();
-			if ($email->is_email_verified === 1)
+			if ($email)
 			{
-				$email = Email::where('email', '=', $request->username)->first()->user->email;
-				$authenticated = auth()->attempt([
-					'email'    => $email,
-					'password' => $request->password,
-				]);
-				$user = auth()->user();
-			}
-			else
-			{
-				return response()->json(['error' => 'Email is not verified'], 404);
+				if ($email->is_email_verified === 1)
+				{
+					$email = Email::where('email', '=', $request->username)->first()->user->email;
+					$authenticated = auth()->attempt([
+						'email'    => $email,
+						'password' => $request->password,
+					]);
+					$user = auth()->user();
+				}
+				else
+				{
+					return response()->json(['error' => 'Email is not verified'], 404);
+				}
 			}
 		}
 		if (!$authenticated)
