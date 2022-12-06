@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
 			'password'        => 'irakliirakli',
 			'profile_picture' => '/storage/images/profile/darth_vader_default_profile.png',
 		]);
+		$user->markEmailAsVerified();
 
 		$user_two = User::create([
 			'username'        => 'yoda',
@@ -35,6 +36,7 @@ class DatabaseSeeder extends Seeder
 			'password'        => 'irakliirakli',
 			'profile_picture' => '/storage/images/profile/darth_vader_default_profile.png',
 		]);
+		$user_two->markEmailAsVerified();
 
 		$shrek = Movie::create([
 			'image'   => '/storage/images/movies/shrek.jpg',

@@ -31,7 +31,11 @@ class AuthController extends Controller
 		$request->merge([
 			$login_type => $request->input('username'),
 		]);
-		$authenticated = auth()->attempt($request->only($login_type, 'password'));
+		$user = auth()->user();
+		if (!$user->hasVerifiedEmail())
+		{
+			return response()->json(['error' => 'Email is not verified'], 404);
+		}
 
 		if (!$authenticated)
 		{

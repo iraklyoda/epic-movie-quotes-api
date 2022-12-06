@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EmailsController;
 use App\Http\Controllers\LikesController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\QuoteCommentsController;
@@ -28,6 +29,11 @@ Route::group(['controller' => AuthController::class], function () {
 	Route::post('/profile/update-user', 'updateUser')->name('auth.update_user');
 	Route::get('/me', 'me')->middleware('jwt.auth')->name('me');
 	Route::get('/logout', 'logout')->middleware('jwt.auth')->name('auth.logout');
+});
+
+Route::group(['controller' => EmailsController::class], function () {
+	Route::post('/profile/create-email', 'create')->name('email.create');
+	Route::get('/profile/email/verify/{id}', 'verify')->name('email.verification');
 });
 
 Route::group(['controller' => GoogleController::class], function () {

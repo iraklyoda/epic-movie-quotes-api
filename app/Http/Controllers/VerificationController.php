@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\email;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -18,6 +19,12 @@ class VerificationController extends Controller
 		if (!$user->hasVerifiedEmail())
 		{
 			$user->markEmailAsVerified();
+			Email::create([
+				'email'             => $user->email,
+				'user_id'           => $user->id,
+				'primary'           => 1,
+				'is_email_verified' => 1,
+			]);
 		}
 		return redirect(env('VITE_APP_ROOT') . '?verified=yes');
 	}
