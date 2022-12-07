@@ -121,7 +121,9 @@ class AuthController extends Controller
 		return response()->json(
 			[
 				'message' => 'authenticated successfully',
-				'user'    => jwtUser(),
+				'user'    => jwtUser()->load(['emails' => function ($query) {
+					$query->where('primary', '=', 0);
+				}]),
 			],
 			200
 		);
