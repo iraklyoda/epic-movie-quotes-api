@@ -80,7 +80,13 @@ class MoviesController extends Controller
 
 	public function destroy(Movie $movie)
 	{
-		$movie->delete();
-		return response();
+		if ($movie->delete())
+		{
+			return response()->json(['Movie deleted successfully'], 200);
+		}
+		else
+		{
+			return response()->json(['Problem deleting film'], 404);
+		}
 	}
 }

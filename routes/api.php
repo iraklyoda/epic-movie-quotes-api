@@ -34,6 +34,8 @@ Route::group(['controller' => AuthController::class], function () {
 Route::group(['controller' => EmailsController::class], function () {
 	Route::post('/profile/create-email', 'create')->name('email.create');
 	Route::get('/profile/email/verify/{id}', 'verify')->name('email.verification');
+	Route::post('/profile/email/make-primary/{email}', 'makePrimary')->name('email.make_primary');
+	Route::post('/profile/email/delete/{email:id}', 'destroy')->name('email.delete');
 });
 
 Route::group(['controller' => GoogleController::class], function () {

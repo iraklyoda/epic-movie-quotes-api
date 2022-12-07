@@ -15,7 +15,7 @@ class StoreUserUpdateRequest extends FormRequest
 	{
 		return [
 			'profile_picture' => ['image'],
-			'username'        => ['min:3'],
+			'username'        => ['min:3', 'unique:users'],
 			'password'        => ['min:3', 'confirmed'],
 		];
 	}
