@@ -12,14 +12,12 @@ return new class extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('movies', function (Blueprint $table) {
+		Schema::create('emails', function (Blueprint $table) {
 			$table->id();
+			$table->string('email')->unique();
 			$table->foreignId('user_id')->nullable();
-			$table->json('title');
-			$table->json('director');
-			$table->json('description');
-			$table->json('genres');
-			$table->string('image');
+			$table->boolean('primary')->default(0);
+			$table->boolean('is_email_verified')->default(0);
 			$table->timestamps();
 		});
 	}
@@ -31,6 +29,6 @@ return new class extends Migration {
 	 */
 	public function down()
 	{
-		Schema::dropIfExists('movies');
+		Schema::dropIfExists('emails');
 	}
 };

@@ -2,9 +2,7 @@
     'url',
     'user',
 ])
-
     <!doctype html>
-
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -18,9 +16,9 @@
     <h2>MOVIE QUOTES</h2>
 </header>
 <main>
-    <p>Hola {{$user}}</p>
-    <p>Thanks for joining Movie quotes! We really appreciate it. Please click the button below to verify your account:</p>
-    <button><a href="{{$url}}">Verify account</a></button>
+    <p>Hola</p>
+    <p>Please click the button below to verify your new email address:</p>
+    <button><a href="{{$url}}">Verify email</a></button>
     <p>If clicking doesn't work, you can try copying and pasting it to your browser:</p>
     <p class="max-width">{{$url}}</p>
     <p>If you have any problems, please contact us: support@moviequotes.ge</p>

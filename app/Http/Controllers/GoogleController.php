@@ -21,18 +21,19 @@ class GoogleController extends Controller
 			$google_user = Socialite::driver('google')->stateless()->user();
 
 			// Check Users Email If Already There
-			$user = User::where('google_id', $google_user->getEmail())->first();
+			$user = User::where('email', $google_user->getEmail())->first();
 			if (!$user)
 			{
 				$new_user = User::updateOrCreate([
 					'google_id' => $google_user->getId(),
 				], [
-					'username'     => $google_user->getName(),
-					'email'        => $google_user->getEmail(),
+					'username'        => $google_user->getName(),
+					'email'           => $google_user->getEmail(),
+					'profile_picture' => $google_user->getAvatar(),
 				]);
 				$payload = [
 					'exp' => Carbon::now()->addDays(2)->timestamp,
-					'uid' => User::where('username', '=', $google_user->getName())->first()->id,
+					'uid' => User::where('email', '=', $google_user->getEmail())->first()->id,
 				];
 				$jwt = JWT::encode($payload, config('auth.jwt_secret'), 'HS256');
 				$cookie = cookie('access_token', $jwt, 30, '/', config('auth.front_end_top_level_domain'), true, true, false, 'Strict');
@@ -42,7 +43,7 @@ class GoogleController extends Controller
 			{
 				$payload = [
 					'exp' => Carbon::now()->addDays(2)->timestamp,
-					'uid' => User::where('username', '=', $google_user->getName())->first()->id,
+					'uid' => User::where('email', '=', $google_user->getEmail())->first()->id,
 				];
 				$jwt = JWT::encode($payload, config('auth.jwt_secret'), 'HS256');
 				$cookie = cookie('access_token', $jwt, 30, '/', config('auth.front_end_top_level_domain'), true, true, false, 'Strict');

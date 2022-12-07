@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Notifications\ResetPassword;
+use App\Notifications\VerifyCreatedEmail;
+use App\Notifications\VerifyEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -22,6 +25,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
 		'email',
 		'password',
 		'google_id',
+		'profile_picture',
 	];
 
 	protected $hidden = [
@@ -41,6 +45,46 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
 	public function getJWTIdentifier()
 	{
 		return $this->getKey();
+	}
+
+	public function movies()
+	{
+		return $this->hasMany(Movie::class);
+	}
+
+	public function emails()
+	{
+		return $this->hasMany(Email::class);
+	}
+
+	public function comments()
+	{
+		return $this->hasMany(Comment::class);
+	}
+
+	public function likes()
+	{
+		return $this->hasMany(Like::class);
+	}
+
+	public function notifications()
+	{
+		return $this->hasMany(Notification::class);
+	}
+
+	public function sendEmailVerificationNotification()
+	{
+		$this->notify(new VerifyEmail());
+	}
+
+	public function sendPasswordResetNotification($token)
+	{
+		$this->notify(new ResetPassword($token));
+	}
+
+	public function sendEmailVerification($id)
+	{
+		$this->notify(new VerifyCreatedEmail($id));
 	}
 
 	/*
