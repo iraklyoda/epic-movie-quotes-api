@@ -72,7 +72,7 @@ class MoviesController extends Controller
 	public function search(Request $request)
 	{
 		$search = $request->search;
-		$movies = Movie::where('user_id', JwtUser()->id)->where('title', 'like', '%' . $search . '%')->orWhere('title', 'like', '%' . ucwords($search . '%'))
+		$movies = Movie::where('user_id', JwtUser()->id)->where('title', 'like', '%' . $search . '%')->orWhere('user_id', jwtUser()->id)->where('title', 'like', '%' . ucwords($search) . '%')
 			->orderBy('id', 'desc')->with('quotes')->get();
 		return response()->json($movies);
 	}
