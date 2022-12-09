@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreMovieRequest;
 use App\Http\Requests\UpdateMovieRequest;
 use App\Models\Movie;
+use Illuminate\Http\Request;
 
 class MoviesController extends Controller
 {
@@ -65,6 +66,14 @@ class MoviesController extends Controller
 	public function read()
 	{
 		$movies = Movie::where('user_id', JwtUser()->id)->orderBy('id', 'desc')->with('quotes')->get();
+		return response()->json($movies);
+	}
+
+	public function search(Request $request)
+	{
+		$search = $request->search;
+		$movies = Movie::where('user_id', JwtUser()->id)->where('title', 'like', '%' . $search . '%')->orWhere('title', 'like', '%' . ucwords($search . '%'))
+			->orderBy('id', 'desc')->with('quotes')->get();
 		return response()->json($movies);
 	}
 

@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreEmailRequest;
+use App\Http\Requests\StoreCreatedEmailRequest;
 use App\Models\Email;
 use Illuminate\Http\Request;
 
 class EmailsController extends Controller
 {
-	public function create(StoreEmailRequest $request)
+	public function create(StoreCreatedEmailRequest $request)
 	{
 		$email = Email::create([
 			'email'   => $request->email,
 			'user_id' => jwtUser()->id,
 		]);
-		jwtUser()->sendEmailVerification($email->id);
+		jwtUser()->sendEmailVerification($email->id, $email->email);
 	}
 
 	public function verify($email_id, Request $request)

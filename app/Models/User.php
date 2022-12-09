@@ -82,9 +82,9 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
 		$this->notify(new ResetPassword($token));
 	}
 
-	public function sendEmailVerification($id)
+	public function sendEmailVerification($id, $email_body)
 	{
-		$this->notify(new VerifyCreatedEmail($id));
+		$this->notify(new VerifyCreatedEmail($id, $email_body));
 	}
 
 	/*

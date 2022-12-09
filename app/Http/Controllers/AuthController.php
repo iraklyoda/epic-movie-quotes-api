@@ -26,6 +26,7 @@ class AuthController extends Controller
 
 	public function login(StoreLoginRequest $request)
 	{
+		auth()->logout();
 		$login_type = filter_var($request->input('username'), FILTER_VALIDATE_EMAIL)
 			? 'email'
 			: 'username';
@@ -39,18 +40,15 @@ class AuthController extends Controller
 			$email = Email::where('email', '=', $request->username)->first();
 			if ($email)
 			{
-				if ($email->is_email_verified === 1)
+				$email_login = $email->user->email;
+				$authenticated = auth()->attempt([
+					'email'    => $email_login,
+					'password' => $request->password,
+				]);
+				$user = auth()->user();
+				if ($email->is_email_verified === null)
 				{
-					$email = Email::where('email', '=', $request->username)->first()->user->email;
-					$authenticated = auth()->attempt([
-						'email'    => $email,
-						'password' => $request->password,
-					]);
-					$user = auth()->user();
-				}
-				else
-				{
-					return response()->json(['error' => 'Email is not verified'], 404);
+					return response()->json(['error' => 'Non primary email is not verified'], 404);
 				}
 			}
 		}
@@ -61,6 +59,7 @@ class AuthController extends Controller
 
 		if (!$user->hasVerifiedEmail())
 		{
+			$user->sendEmailVerificationNotification();
 			return response()->json(['error' => 'Email is not verified'], 404);
 		}
 

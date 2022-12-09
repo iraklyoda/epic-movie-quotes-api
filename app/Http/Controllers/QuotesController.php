@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreQuoteRequest;
+use App\Http\Requests\StoreSearchRequest;
 use App\Http\Requests\UpdateQuoteRequest;
 use App\Models\Movie;
 use App\Models\Quote;
+use Illuminate\Http\Request;
 
 class QuotesController extends Controller
 {
@@ -47,8 +49,52 @@ class QuotesController extends Controller
 
 	public function read()
 	{
-		$quotes = Quote::with('comments')->with('likes')->orderBy('created_at', 'desc')->get();
+		$quotes = Quote::with('comments')->with('likes')->orderBy('created_at', 'desc')->paginate(2);
 		return response()->json($quotes);
+	}
+
+	public function readNumber(Request $request)
+	{
+		return Quote::take($request->number)->orderBy('created_at', 'desc')->get();
+	}
+
+	public function readPaginate()
+	{
+		$quotes = Quote::with('comments')->with('likes')->orderBy('created_at', 'desc')->paginate(2);
+		return response()->json($quotes);
+	}
+
+	public function search(StoreSearchRequest $request)
+	{
+		$search = $request->search;
+		$quotes = null;
+		if ($search[0] === '#')
+		{
+			$search = substr($search, 1);
+			$quotes = Quote::where('quote', 'like', '%' . $search . '%')->with('comments')->with('likes')->orderBy('created_at', 'desc')->paginate(2);
+		}
+		elseif ($search[0] === '@')
+		{
+			$search = substr($search, 1);
+			$quotes = Quote::whereHas('movie', function ($query) use ($search) {
+				$query->where('title', 'like', '%' . $search . '%');
+			})->with('comments')->with('likes')->orderBy('created_at', 'desc')->paginate(2);
+		}
+		else
+		{
+			$quotes = Quote::whereHas('movie', function ($query) use ($search) {
+				$query->where('title', 'like', '%' . $search . '%');
+			})->orWhere('quote', 'like', '%' . $search . '%')->with('comments')->with('likes')->orderBy('created_at', 'desc')->paginate(2);
+		}
+
+		if (!$quotes->first())
+		{
+			return response()->json(['message' => 'not found'], 404);
+		}
+		else
+		{
+			return response()->json($quotes);
+		}
 	}
 
 	public function show(Quote $quote)

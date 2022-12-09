@@ -20,7 +20,9 @@ class VerifyCreatedEmail extends Notification
 
 	public $url;
 
-	public function __construct($id)
+	public $email_body;
+
+	public function __construct($id, $email_body)
 	{
 		$this->id = $id;
 		$this->url = URL::temporarySignedRoute(
@@ -28,6 +30,7 @@ class VerifyCreatedEmail extends Notification
 			now()->addMinutes(30),
 			['user' => jwtUser()->id, 'id' => $id],
 		);
+		$this->email_body = $email_body;
 	}
 
 	/**
@@ -52,9 +55,10 @@ class VerifyCreatedEmail extends Notification
 	public function toMail($notifiable)
 	{
 		$url = url($this->url);
+		$email_body = $this->email_body;
 
 		return (new MailMessage)
-			->view('verifyCreatedEmail', ['url' => $url])
+			->view('verifyCreatedEmail', ['url' => $url, 'email' => $email_body])
 			->action('Notification Action', $url)
 			->line('Thank you for using our application!')
 			->subject('Verify Email Address');
