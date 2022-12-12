@@ -34,6 +34,8 @@ Route::group(['controller' => AuthController::class], function () {
 Route::group(['controller' => EmailsController::class], function () {
 	Route::post('/profile/create-email', 'create')->name('email.create');
 	Route::get('/profile/email/verify/{id}', 'verify')->name('email.verification');
+	Route::post('/profile/email/make-primary/{email}', 'makePrimary')->name('email.make_primary');
+	Route::post('/profile/email/delete/{email:id}', 'destroy')->name('email.delete');
 });
 
 Route::group(['controller' => GoogleController::class], function () {
@@ -55,6 +57,7 @@ Route::group(['controller' => ResetPasswordController::class], function () {
 Route::group(['controller' => MoviesController::class], function () {
 	Route::post('/movies/create', 'create')->name('movie.create');
 	Route::get('/movies/read', 'read')->middleware('jwt.auth')->name('movies.read');
+	Route::post('/movies/search', 'search')->name('movies.search');
 	Route::get('/movies/movie/{movie:id}', 'show')->middleware('jwt.auth')->name('movie.show');
 	Route::post('/movies/movie/{movie:id}', 'update')->name('movie.update');
 	Route::post('/movies/movie/delete/{movie:id}', 'destroy')->name('movie.delete');
@@ -63,6 +66,8 @@ Route::group(['controller' => MoviesController::class], function () {
 Route::group(['controller' => QuotesController::class], function () {
 	Route::post('/quotes/create', 'create')->name('quotes.create');
 	Route::get('/quotes/read', 'read')->middleware('jwt.auth')->name('quotes.read');
+	Route::post('/quotes/get', 'readNumber')->name('quotes.get');
+	Route::post('/quotes/search', 'search')->name('quotes.search');
 	Route::get('/quotes/quote/{quote:id}', 'show')->middleware('jwt.auth')->name('quote.show');
 	Route::post('/quotes/quote/{quote:id}', 'update')->name('quote.update');
 	Route::get('/quotes/movie/{movie:id}', 'readMovieQuotes')->middleware('jwt.auth')->name('movie_quotes.read');

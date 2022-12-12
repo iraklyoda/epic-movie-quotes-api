@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreMovieRequest;
 use App\Http\Requests\UpdateMovieRequest;
 use App\Models\Movie;
+use Illuminate\Http\Request;
 
 class MoviesController extends Controller
 {
@@ -68,6 +69,14 @@ class MoviesController extends Controller
 		return response()->json($movies);
 	}
 
+	public function search(Request $request)
+	{
+		$search = $request->search;
+		$movies = Movie::where('user_id', JwtUser()->id)->where('title', 'like', '%' . $search . '%')->orWhere('user_id', jwtUser()->id)->where('title', 'like', '%' . ucwords($search) . '%')
+			->orderBy('id', 'desc')->with('quotes')->get();
+		return response()->json($movies);
+	}
+
 	public function show(Movie $movie)
 	{
 		$movie->genres = json_decode($movie->genres, true);
@@ -80,7 +89,13 @@ class MoviesController extends Controller
 
 	public function destroy(Movie $movie)
 	{
-		$movie->delete();
-		return response();
+		if ($movie->delete())
+		{
+			return response()->json(['Movie deleted successfully'], 200);
+		}
+		else
+		{
+			return response()->json(['Problem deleting film'], 404);
+		}
 	}
 }

@@ -13,7 +13,7 @@ use Illuminate\Http\JsonResponse;
 
 class AuthController extends Controller
 {
-	public function register(StoreUserRequest $request)
+	public function register(StoreUserRequest $request): JsonResponse
 	{
 		$default_profile_picture = '/storage/images/profile/darth_vader_default_profile.png';
 		$user = User::create([
@@ -22,10 +22,12 @@ class AuthController extends Controller
 			'password'        => $request->password,
 			'profile_picture' => $default_profile_picture,
 		])->sendEmailVerificationNotification();
+		return response()->json('User registered successfully', 201);
 	}
 
 	public function login(StoreLoginRequest $request)
 	{
+		auth()->logout();
 		$login_type = filter_var($request->input('username'), FILTER_VALIDATE_EMAIL)
 			? 'email'
 			: 'username';
@@ -39,18 +41,15 @@ class AuthController extends Controller
 			$email = Email::where('email', '=', $request->username)->first();
 			if ($email)
 			{
-				if ($email->is_email_verified === 1)
+				$email_login = $email->user->email;
+				$authenticated = auth()->attempt([
+					'email'    => $email_login,
+					'password' => $request->password,
+				]);
+				$user = auth()->user();
+				if ($email->is_email_verified === null)
 				{
-					$email = Email::where('email', '=', $request->username)->first()->user->email;
-					$authenticated = auth()->attempt([
-						'email'    => $email,
-						'password' => $request->password,
-					]);
-					$user = auth()->user();
-				}
-				else
-				{
-					return response()->json(['error' => 'Email is not verified'], 404);
+					return response()->json(['error' => 'Non primary email is not verified'], 403);
 				}
 			}
 		}
@@ -61,7 +60,8 @@ class AuthController extends Controller
 
 		if (!$user->hasVerifiedEmail())
 		{
-			return response()->json(['error' => 'Email is not verified'], 404);
+			$user->sendEmailVerificationNotification();
+			return response()->json(['error' => 'Email is not verified'], 403);
 		}
 
 		$payload = [
@@ -91,6 +91,10 @@ class AuthController extends Controller
 
 	public function updateUser(StoreUserUpdateRequest $request)
 	{
+		if (!jwtUser())
+		{
+			return response()->json('not authorized', 401);
+		}
 		$user = JwtUser();
 		if ($request->username)
 		{
@@ -108,7 +112,7 @@ class AuthController extends Controller
 		}
 		if ($user->save())
 		{
-			return response()->json('works', 200);
+			return response()->json('user updated', 200);
 		}
 		else
 		{

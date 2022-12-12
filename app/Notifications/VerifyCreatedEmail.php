@@ -5,6 +5,7 @@ namespace App\Notifications;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\URL;
 
 class VerifyCreatedEmail extends Notification
 {
@@ -17,9 +18,19 @@ class VerifyCreatedEmail extends Notification
 	 */
 	public $id;
 
-	public function __construct($id)
+	public $url;
+
+	public $email_body;
+
+	public function __construct($id, $email_body)
 	{
 		$this->id = $id;
+		$this->url = URL::temporarySignedRoute(
+			'email.verification',
+			now()->addMinutes(30),
+			['user' => jwtUser()->id, 'id' => $id],
+		);
+		$this->email_body = $email_body;
 	}
 
 	/**
@@ -43,10 +54,11 @@ class VerifyCreatedEmail extends Notification
 	 */
 	public function toMail($notifiable)
 	{
-		$url = url('/api/profile/email/verify/' . $this->id);
+		$url = url($this->url);
+		$email_body = $this->email_body;
 
 		return (new MailMessage)
-			->view('verifyCreatedEmail', ['url' => $url])
+			->view('verifyCreatedEmail', ['url' => $url, 'email' => $email_body])
 			->action('Notification Action', $url)
 			->line('Thank you for using our application!')
 			->subject('Verify Email Address');

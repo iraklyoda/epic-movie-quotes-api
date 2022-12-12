@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Email;
 use App\Models\Movie;
 use App\Models\Notification;
 use App\Models\Quote;
@@ -29,6 +30,12 @@ class DatabaseSeeder extends Seeder
 			'profile_picture' => '/storage/images/profile/darth_vader_default_profile.png',
 		]);
 		$user->markEmailAsVerified();
+		Email::create([
+			'email'             => $user->email,
+			'user_id'           => $user->id,
+			'primary'           => 1,
+			'is_email_verified' => 1,
+		]);
 
 		$user_two = User::create([
 			'username'        => 'yoda',
@@ -37,6 +44,12 @@ class DatabaseSeeder extends Seeder
 			'profile_picture' => '/storage/images/profile/darth_vader_default_profile.png',
 		]);
 		$user_two->markEmailAsVerified();
+		Email::create([
+			'email'             => $user_two->email,
+			'user_id'           => $user_two->id,
+			'primary'           => 1,
+			'is_email_verified' => 1,
+		]);
 
 		$shrek = Movie::create([
 			'image'   => '/storage/images/movies/shrek.jpg',

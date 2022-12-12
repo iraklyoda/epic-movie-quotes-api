@@ -1,6 +1,6 @@
 @props([
     'url',
-    'user',
+    'email'
 ])
     <!doctype html>
 <html lang="en">
@@ -18,6 +18,7 @@
 <main>
     <p>Hola</p>
     <p>Please click the button below to verify your new email address:</p>
+    <p>{{$email}}</p>
     <button><a href="{{$url}}">Verify email</a></button>
     <p>If clicking doesn't work, you can try copying and pasting it to your browser:</p>
     <p class="max-width">{{$url}}</p>

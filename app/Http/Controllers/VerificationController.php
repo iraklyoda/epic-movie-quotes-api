@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\email;
+use App\Models\Email;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -26,7 +26,7 @@ class VerificationController extends Controller
 				'is_email_verified' => 1,
 			]);
 		}
-		return redirect(env('VITE_APP_ROOT') . '?verified=yes');
+		return redirect(env('VITE_APP_ROOT') . 'emailactivated');
 	}
 
 	public function resend()
