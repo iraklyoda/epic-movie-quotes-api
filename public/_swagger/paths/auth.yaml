@@ -1,0 +1,101 @@
+paths:
+  /register:
+    post:
+      tags:
+        - Auth
+      summary: Creates a new user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - type: object
+                  properties:
+                    username:
+                      type: string
+                      example: masteryoda
+                    email:
+                      type: string
+                      example: masteryoda@tatooine.com
+                    password:
+                      type: password
+                      example: testPassword
+                    password_confirmation:
+                      type: password
+                      example: testPassword
+      responses:
+        "201":
+          $ref: "../responses/auth.yaml#/components/responses/register/201"
+        "422":
+          $ref: "../responses/auth.yaml#/components/responses/register/422"
+  /login:
+    post:
+      tags:
+        - Auth
+      summary: Authorizes user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - type: object
+                  properties:
+                    username:
+                      type: string
+                      example: masteryoda
+                    password:
+                      type: password
+                      example: testPassword
+      responses:
+        "200":
+          description: success
+        "403":
+          $ref: "../responses/auth.yaml#/components/responses/login/403"
+        "404":
+          $ref: "../common.yaml#/components/responses/404"
+  /me:
+    get:
+      tags:
+        - Auth
+      summary: Checks authentication and Returns user information
+      responses:
+        "200":
+          $ref: "../responses/auth.yaml#/components/responses/me/200"
+        "401":
+          $ref: "../common.yaml#/components/responses/401"
+  /profile/update-user:
+    post:
+      tags:
+        - Auth
+      summary: Updates user information
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: yojimbo
+                new_password:
+                    type: password
+                    example: newPassword
+                new_password_confirmation:
+                    type: password
+                    example: newPassword
+                profile_picture:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: "user updated"
+        "401":
+          $ref: "../common.yaml#/components/responses/401"
+        "403":
+          $ref: "../responses/auth.yaml#/components/responses/login/403"
+        "404":
+          $ref: "../common.yaml#/components/responses/404"
+

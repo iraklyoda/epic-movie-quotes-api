@@ -1,0 +1,34 @@
+components:
+  schemas:
+    User:
+      allOf:
+        - $ref: "../common.yaml#/components/schemas/Id"
+        - type: object
+          properties:
+            username:
+              type: string
+              example: masterYoda
+            email:
+              type: string
+              example: yoda@tatooine.com
+            email_verified_at:
+              type: string
+              example: "2022-07-26T20:06:02.000000Z"
+            password:
+              type: password
+              example: testPassword
+            google_id:
+              type: integer
+              example: 104856291577938121274
+            profile_picture:
+              type: string
+              example: /storage/images/profile/darth_vader_default_profile.png,
+        - $ref: "../common.yaml#/components/schemas/TimeStamps"
+      required:
+        - id
+        - username
+        - email
+        - password
+        - profile_picture
+        - created_at
+        - updated_at

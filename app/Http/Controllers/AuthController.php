@@ -13,7 +13,7 @@ use Illuminate\Http\JsonResponse;
 
 class AuthController extends Controller
 {
-	public function register(StoreUserRequest $request)
+	public function register(StoreUserRequest $request): JsonResponse
 	{
 		$default_profile_picture = '/storage/images/profile/darth_vader_default_profile.png';
 		$user = User::create([
@@ -22,6 +22,7 @@ class AuthController extends Controller
 			'password'        => $request->password,
 			'profile_picture' => $default_profile_picture,
 		])->sendEmailVerificationNotification();
+		return response()->json('User registered successfully', 201);
 	}
 
 	public function login(StoreLoginRequest $request)
@@ -48,7 +49,7 @@ class AuthController extends Controller
 				$user = auth()->user();
 				if ($email->is_email_verified === null)
 				{
-					return response()->json(['error' => 'Non primary email is not verified'], 404);
+					return response()->json(['error' => 'Non primary email is not verified'], 403);
 				}
 			}
 		}
@@ -60,7 +61,7 @@ class AuthController extends Controller
 		if (!$user->hasVerifiedEmail())
 		{
 			$user->sendEmailVerificationNotification();
-			return response()->json(['error' => 'Email is not verified'], 404);
+			return response()->json(['error' => 'Email is not verified'], 403);
 		}
 
 		$payload = [
@@ -90,6 +91,10 @@ class AuthController extends Controller
 
 	public function updateUser(StoreUserUpdateRequest $request)
 	{
+		if (!jwtUser())
+		{
+			return response()->json('not authorized', 401);
+		}
 		$user = JwtUser();
 		if ($request->username)
 		{
@@ -107,7 +112,7 @@ class AuthController extends Controller
 		}
 		if ($user->save())
 		{
-			return response()->json('works', 200);
+			return response()->json('user updated', 200);
 		}
 		else
 		{

@@ -1,0 +1,33 @@
+openapi: 3.0.0
+info:
+  title: Epic Movie Quotes API
+  description: Epic Movie Quotes Routes
+  version: 0.1.9
+
+servers:
+  - url: http://127.0.0.1:8000/api
+    description: local server
+  - url: http://producation.app/api
+    description: production server
+
+paths:
+  /register:
+    $ref: "./_swagger/paths/auth.yaml#/paths/~1register"
+  /login:
+    $ref: "./_swagger/paths/auth.yaml#/paths/~1login"
+  /me:
+    $ref: "./_swagger/paths/auth.yaml#/paths/~1me"
+  /profile/update-user:
+    $ref: "./_swagger/paths/auth.yaml#/paths/~1profile~1update-user"
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    User:
+      allOf:
+        - $ref: "./_swagger/schemas/user.yaml#/components/schemas/User"
+
