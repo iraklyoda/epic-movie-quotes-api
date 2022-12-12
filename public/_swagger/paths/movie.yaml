@@ -1,0 +1,122 @@
+paths:
+  /movies/create:
+    post:
+      tags:
+        - Movie
+      summary: Creates movie.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "../schemas/movie.yaml#/components/schemas/MovieForm"
+      responses:
+        "201":
+          $ref: "../responses/movie.yaml#/components/responses/movie~1create/201"
+        "401":
+          $ref: "../common.yaml#/components/responses/422"
+        "422":
+          $ref: "../common.yaml#/components/responses/422"
+  /movies/movie/{movie:id}:
+    post:
+      parameters:
+        - in: path
+          name: movie:id
+          required: true
+          schema:
+            type: integer
+            minimum:  1
+            example:  1
+          description:  The movie ID
+      tags:
+        - Movie
+      summary: Updates movie information
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "../schemas/movie.yaml#/components/schemas/EditMovieForm"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              example: "Movie updated successfully"
+        "404":
+          $ref: "../common.yaml#/components/responses/404"
+    get:
+      parameters:
+        - in: path
+          name: movie:id
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
+          description: The movie ID
+      tags:
+        - Movie
+      summary: Returns single movie
+      responses:
+        "200":
+          $ref: "../responses/movie.yaml#/components/responses/movie~1read/200"
+        "404":
+          $ref: "../common.yaml#/components/responses/404"
+
+  /movies/read:
+    get:
+      tags:
+        - Movie
+      summary: Returns movies.
+      responses:
+        "200":
+          $ref: "../responses/movie.yaml#/components/responses/movie~1read/200"
+        "401":
+          $ref: "../common.yaml#/components/responses/401"
+  /movies/search:
+    post:
+      tags:
+        - Movie
+      summary: Search in movies.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              allOf:
+                - type: object
+                  properties:
+                    search:
+                      type: string
+                      example: uncut gems
+      responses:
+        "200":
+          $ref: "../responses/movie.yaml#/components/responses/movie~1search/200"
+  /movies/movie/delete/{movie:id}:
+    post:
+      parameters:
+        - in: path
+          name: movie:id
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
+          description: The movie ID
+      tags:
+        - Movie
+      summary: Deletes movie
+      responses:
+        "202":
+          description: OK
+          content:
+            application/json:
+              example: "Movie deleted successfully"
+        "404":
+          $ref: "../common.yaml#/components/responses/404"
+
+
+
+
+

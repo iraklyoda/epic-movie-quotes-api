@@ -11,6 +11,10 @@ class MoviesController extends Controller
 {
 	public function create(StoreMovieRequest $request)
 	{
+		if (!jwtUser())
+		{
+			return response()->json('not authorized', 401);
+		}
 		$file_path = '';
 		if ($request->file('image'))
 		{
@@ -35,7 +39,7 @@ class MoviesController extends Controller
 				'ka' => $request->description_ka,
 			],
 		]);
-		return 'Done: ' . $file_name . '. ' . $file_path;
+		return response()->json('Movie created successfully', 200);
 	}
 
 	public function update(UpdateMovieRequest $request, Movie $movie)
@@ -47,7 +51,7 @@ class MoviesController extends Controller
 			$file_path = request()->file('image')->storeAs('images', str_replace(' ', '_', $file_name), 'public');
 			$movie->image = '/storage/' . $file_path;
 		}
-		$movie->genres = $request->genres;
+		$movie->genres = json_encode($request->genres);
 		$movie->title = [
 			'en' => $request->title_en,
 			'ka' => $request->title_ka,
@@ -60,7 +64,10 @@ class MoviesController extends Controller
 			'en' => $request->description_en,
 			'ka' => $request->description_ka,
 		];
-		$movie->save();
+		if ($movie->save())
+		{
+			return response()->json('Movie updated successfully', 201);
+		}
 	}
 
 	public function read()
@@ -91,7 +98,7 @@ class MoviesController extends Controller
 	{
 		if ($movie->delete())
 		{
-			return response()->json(['Movie deleted successfully'], 200);
+			return response()->json('Movie deleted successfully', 200);
 		}
 		else
 		{

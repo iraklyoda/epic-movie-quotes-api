@@ -1,0 +1,23 @@
+components:
+  responses:
+    movie/create:
+      "201":
+        description: OK
+        content:
+          application/json:
+            example: "Movie created successfully!"
+    movie/read:
+      "200":
+        description: OK
+        content:
+          application/json:
+            schema:
+              $ref: "../schemas/movie.yaml#/components/schemas/ReturnedMovie"
+
+    movie/search:
+      "200":
+        description: OK
+        content:
+          application/json:
+            schema:
+              $ref: "../schemas/movie.yaml#/components/schemas/ReturnedMovie"

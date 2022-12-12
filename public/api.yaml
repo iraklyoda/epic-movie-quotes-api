@@ -19,6 +19,47 @@ paths:
     $ref: "./_swagger/paths/auth.yaml#/paths/~1me"
   /profile/update-user:
     $ref: "./_swagger/paths/auth.yaml#/paths/~1profile~1update-user"
+  /logout:
+    $ref: "./_swagger/paths/auth.yaml#/paths/~1logout"
+  /email/verify/{id}:
+    $ref: "./_swagger/paths/verification.yaml#/paths/~1email~1verify~1{id}"
+  /profile/create-email:
+    $ref: "./_swagger/paths/email.yaml#/paths/~1profile~1create-email"
+  /profile/email/verify/{id}:
+    $ref: "./_swagger/paths/email.yaml#/paths/~1profile~1email~1verify~1{id}"
+  /profile/email/make-primary/{email:id}:
+    $ref: "./_swagger/paths/email.yaml#/paths/~1profile~1email~1make-primary~1{email:id}"
+  /profile/email/delete/{email:id}:
+    $ref: "./_swagger/paths/email.yaml#/paths/~1profile~1email~1delete~1{email:id}"
+  /google/login:
+    $ref: "./_swagger/paths/google.yaml#/paths/~1google~1login"
+  /google/callback:
+    $ref: "./_swagger/paths/google.yaml#/paths/~1google~1callback"
+  /movies/create:
+    $ref: "./_swagger/paths/movie.yaml#/paths/~1movies~1create"
+  /movies/movie/{movie:id}:
+    $ref: "./_swagger/paths/movie.yaml#/paths/~1movies~1movie~1{movie:id}"
+  /movies/read:
+    $ref: "./_swagger/paths/movie.yaml#/paths/~1movies~1read"
+  /movies/search:
+    $ref: "./_swagger/paths/movie.yaml#/paths/~1movies~1search"
+  /movies/movie/delete/{movie:id}:
+    $ref: "./_swagger/paths/movie.yaml#/paths/~1movies~1movie~1delete~1{movie:id}"
+  /quotes/create:
+    $ref: "./_swagger/paths/quote.yaml#/paths/~1quotes~1create"
+  /quotes/quote/{quote:id}:
+    $ref: "./_swagger/paths/quote.yaml#/paths/~1quotes~1quote~1{quote:id}"
+  /quotes/read:
+    $ref: "./_swagger/paths/quote.yaml#/paths/~1quotes~1read"
+  /quotes/get:
+    $ref: "./_swagger/paths/quote.yaml#/paths/~1quotes~1get"
+  /quotes/search:
+    $ref: "./_swagger/paths/quote.yaml#/paths/~1quotes~1search"
+
+
+
+
+
 
 components:
   securitySchemes:
@@ -30,4 +71,12 @@ components:
     User:
       allOf:
         - $ref: "./_swagger/schemas/user.yaml#/components/schemas/User"
-
+    Email:
+      allOf:
+        - $ref: "./_swagger/schemas/email.yaml#/components/schemas/Email"
+    Movie:
+      allOf:
+        - $ref: "./_swagger/schemas/movie.yaml#/components/schemas/Movie"
+    Quote:
+      allOf:
+        - $ref: "./_swagger/schemas/quote.yaml#/components/schemas/Quote"

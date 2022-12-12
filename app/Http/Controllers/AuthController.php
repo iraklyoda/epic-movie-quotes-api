@@ -89,7 +89,7 @@ class AuthController extends Controller
 		]);
 	}
 
-	public function updateUser(StoreUserUpdateRequest $request)
+	public function updateUser(StoreUserUpdateRequest $request): JsonResponse
 	{
 		if (!jwtUser())
 		{

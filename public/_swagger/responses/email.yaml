@@ -1,0 +1,10 @@
+components:
+  responses:
+    profile/create-email:
+      "201":
+        description: OK
+        content:
+          application/json:
+            example: "Email created successfully!"
+    profile/email/verify/{id}:
+

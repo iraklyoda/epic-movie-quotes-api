@@ -1,0 +1,198 @@
+components:
+  schemas:
+    Movie:
+      allOf:
+        - $ref: "../common.yaml#/components/schemas/Id"
+        - type: object
+          properties:
+            user_id:
+              type: integer
+              min: 1
+              example: 1
+            title:
+              type: json
+              example: {
+                "en":
+                  "Seven Samurai",
+                "ka":
+                  "შვიდი სამურაი"
+              }
+            director:
+              type: json
+              example: {
+                "en":
+                  "Akira Kurosawa",
+                "ka":
+                  "აკირა კუროსავა"
+              }
+            description:
+              type: json
+              example: {
+                "en":
+                  "1954 Japanese epic samurai drama film",
+                "ka":
+                  "1954 წლის იაპონური ეპიკური სამურაი დრამა ფილმი"
+              }
+            genres:
+              type: array
+              example:
+                [ drama, epic, comedy ]
+            image:
+              type: string
+              example: /storage/images/movies/seven_samurai.jpg
+        - $ref: "../common.yaml#/components/schemas/TimeStamps"
+      required:
+        - id
+        - user_id
+        - director
+        - description
+        - image
+        - created_at
+        - updated_at
+    MovieForm:
+      allOf:
+        - type: object
+          properties:
+            title_en:
+              type: string
+              example: Uncut Gems
+            title_ka:
+              type: string
+              example: დაუმუშავებელი ქვები
+            director_en:
+              type: string
+              example: Safdie Brothers
+            director_ka:
+              type: string
+              example: ძმები სეფდი
+            description_en:
+              type: string
+              example: 2019 American crime thriller film
+            description_ka:
+              type: string
+              example: 2019 წლის ამერიკული თრილერი
+            genres:
+              type: array
+              example:
+                [ "drama", "epic", "comedy" ]
+            image:
+              type: string
+              format: binary
+      required:
+        - title_en
+        - title_ka
+        - director_en
+        - director_ka
+        - description_en
+        - description_ka
+        - genres
+        - image
+    EditMovieForm:
+      allOf:
+        - type: object
+          properties:
+            title_en:
+              type: string
+              example: Uncut Gems
+            title_ka:
+              type: string
+              example: დაუმუშავებელი ქვები
+            director_en:
+              type: string
+              example: Safdie Brothers
+            director_ka:
+              type: string
+              example: ძმები სეფდი
+            description_en:
+              type: string
+              example: 2019 American crime thriller film
+            description_ka:
+              type: string
+              example: 2019 წლის ამერიკული თრილერი
+            genres:
+              type: array
+              example:
+                [ "drama", "epic", "comedy" ]
+            image:
+              type: string
+              format: binary
+    ReturnedMovie:
+      type: array
+      example: [
+        {
+          "id": 1,
+          "user_id": 1,
+          "title": {
+            "en": "Shrek",
+            "ka": "შრეკი"
+          },
+          "director": {
+            "en": "William Steig",
+            "ka": "უილიამ სტეიგი"
+          },
+          "description": {
+            "en": "Shrek, animated cartoon character, a towering, green ogre whose fearsome appearance belies a kind heart. Shrek is the star of a highly successful series of animated films. At the beginning of the 2001 film Shrek, the title character lives as a recluse in a remote swamp in the fairy-tale land of Duloc.",
+            "ka": "იყო და არა იყო ერთ ზღაპრულ ქვეყანაში დიდი გოლიათი სახელად შრეკი. ცხოვრობდა ის სრულ სიმარტოვეში ტყეში, ჭაობში, რომელიც საკუთარ ჭაქობად მიაჩნდა. მაგრამ ერთხელაც ბოროტმა ლილიპუტმა – ლორდ ფარკაუდმა, ჯადოსნური სამეფოს მმართველმა, დაუნდობლად გაყარა შრეკის ჭაობში ყველა ზღაპრული ბინადარი. და მწვანე ტროლის ბედნიერ ცხოვრებას ბოლოც მოეღო. ლორდ ფარკაუდი დაპირდა შრეკს ჭაობის დაბრუნებას, თუ კი გოლიათი მას მშვენიერ პრინცესა ფიონას მოუყვანს, რომელიც იტანჯება კოშკში, რომელსაც ცეცხლის მფრ ..."
+          },
+          "genres": "[\"Animation\", \"Family\"]",
+          "image": "/storage/images/movies/shrek.jpg",
+          "created_at": "2022-12-12T20:22:05.000000Z",
+          "updated_at": "2022-12-12T20:22:05.000000Z",
+          "user": {
+            "id": 1,
+            "username": "irakli",
+            "email": "irakli@irakli.ge",
+            "email_verified_at": "2022-12-12 20:22:05",
+            "google_id": null,
+            "profile_picture": "/storage/images/profile/darth_vader_default_profile.png",
+            "created_at": "2022-12-12T20:22:05.000000Z",
+            "updated_at": "2022-12-12T20:22:05.000000Z"
+          },
+          "quotes": [
+            {
+              "id": 1,
+              "movie_id": 1,
+              "user_id": 1,
+              "quote": {
+                "en": "Ogres are like onions",
+                "ka": "ოგრები ხახვებივით არიან"
+              },
+              "thumbnail": "/storage/images/quotes/shrek_ogres.jpg",
+              "created_at": "2022-12-12T20:22:05.000000Z",
+              "updated_at": "2022-12-12T20:22:05.000000Z",
+              "movie": {
+                "id": 1,
+                "user_id": 1,
+                "title": {
+                  "en": "Shrek",
+                  "ka": "შრეკი"
+                },
+                "director": {
+                  "en": "William Steig",
+                  "ka": "უილიამ სტეიგი"
+                },
+                "description": {
+                  "en": "Shrek, animated cartoon character, a towering, green ogre whose fearsome appearance belies a kind heart. Shrek is the star of a highly successful series of animated films. At the beginning of the 2001 film Shrek, the title character lives as a recluse in a remote swamp in the fairy-tale land of Duloc.",
+                  "ka": "იყო და არა იყო ერთ ზღაპრულ ქვეყანაში დიდი გოლიათი სახელად შრეკი. ცხოვრობდა ის სრულ სიმარტოვეში ტყეში, ჭაობში, რომელიც საკუთარ ჭაქობად მიაჩნდა. მაგრამ ერთხელაც ბოროტმა ლილიპუტმა – ლორდ ფარკაუდმა, ჯადოსნური სამეფოს მმართველმა, დაუნდობლად გაყარა შრეკის ჭაობში ყველა ზღაპრული ბინადარი. და მწვანე ტროლის ბედნიერ ცხოვრებას ბოლოც მოეღო. ლორდ ფარკაუდი დაპირდა შრეკს ჭაობის დაბრუნებას, თუ კი გოლიათი მას მშვენიერ პრინცესა ფიონას მოუყვანს, რომელიც იტანჯება კოშკში, რომელსაც ცეცხლის მფრ ..."
+                },
+                "genres": "[\"Animation\", \"Family\"]",
+                "image": "/storage/images/movies/shrek.jpg",
+                "created_at": "2022-12-12T20:22:05.000000Z",
+                "updated_at": "2022-12-12T20:22:05.000000Z",
+                "user": {
+                  "id": 1,
+                  "username": "irakli",
+                  "email": "irakli@irakli.ge",
+                  "email_verified_at": "2022-12-12 20:22:05",
+                  "google_id": null,
+                  "profile_picture": "/storage/images/profile/darth_vader_default_profile.png",
+                  "created_at": "2022-12-12T20:22:05.000000Z",
+                  "updated_at": "2022-12-12T20:22:05.000000Z"
+                }
+              },
+              "comments": [],
+              "likes": []
+            }
+          ]
+        }
+      ]

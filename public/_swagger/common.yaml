@@ -40,7 +40,7 @@ components:
   responses:
     "200": OK
     "401":
-      description: Unauthorized
+      description: "Error: Unauthorized"
       content:
         application/json:
           schema:
@@ -51,8 +51,38 @@ components:
                 example:
                   token not present
     "403":
-      description: Forbidden
+      description: "Error: Forbidden"
     "404":
-      description: Not Found
+      description: "Error: Not Found"
+    "405":
+      description:
+        Error:
+          Method Not Allowed
+    "410":
+      description: "Error: Gone"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              msg:
+                type: string
+                example:
+                  Invalid/Expired url provided.
     "422":
-      description: Unprocessable Content
+      description: "Error: Unprocessable content"
+      content:
+        application/json:
+          schema:
+            type: json
+            example: {
+              "message": "The username must be at least 3 characters. (and 1 more error)",
+              "errors": {
+                "username": [
+                  "The username must be at least 3 characters."
+                ],
+                "email": [
+                  "The email has already been taken."
+                ]
+              }
+            }

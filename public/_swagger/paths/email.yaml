@@ -1,0 +1,103 @@
+paths:
+  /profile/create-email:
+    post:
+      tags:
+        - Email
+      summary: Creates a new email.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              allOf:
+                - type: object
+                  properties:
+                    email:
+                      type: string
+                      example: masterobiwan@tatooine.com
+              required:
+                - email
+      responses:
+        "201":
+          $ref: "../responses/email.yaml#/components/responses/profile~1create-email/201"
+        "401":
+          $ref: "../common.yaml#/components/responses/401"
+        "422":
+          $ref: "../common.yaml#/components/responses/422"
+  /profile/email/verify/{id}:
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
+          description: The email ID
+      tags:
+        - Email
+      summary: Validates created email.
+      responses:
+        "200":
+          description: Email verified
+        "410":
+          $ref: "../common.yaml#/components/responses/410"
+  /profile/email/make-primary/{email:id}:
+    post:
+      parameters:
+        - in: path
+          name: email:id
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
+          description: The email ID
+      tags:
+        - Email
+      summary: Makes created email primary.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+                    example:
+                      new email set as primary
+        "404":
+          description: "Error: Not Found"
+  /profile/email/delete/{email:id}:
+    post:
+      parameters:
+        - in: path
+          name: email:id
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
+          description: The email ID
+      tags:
+        - Email
+      summary: Deletes created email
+      responses:
+        "202":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+                    example:
+                      email deleted successfully
+        "404":
+          description: "Error: Not Found"
+
+

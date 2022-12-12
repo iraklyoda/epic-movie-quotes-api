@@ -27,7 +27,7 @@ class VerifyCreatedEmail extends Notification
 		$this->id = $id;
 		$this->url = URL::temporarySignedRoute(
 			'email.verification',
-			now()->addMinutes(30),
+			now()->addDays(1),
 			['user' => jwtUser()->id, 'id' => $id],
 		);
 		$this->email_body = $email_body;

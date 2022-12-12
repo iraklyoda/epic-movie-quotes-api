@@ -12,7 +12,7 @@ class VerificationController extends Controller
 	{
 		if (!$request->hasValidSignature())
 		{
-			return response()->json(['msg' => 'Invalid/Expired url provided.'], 401);
+			return response()->json(['msg' => 'Invalid/Expired url provided.'], 410);
 		}
 		$user = User::findOrFail($user_id);
 

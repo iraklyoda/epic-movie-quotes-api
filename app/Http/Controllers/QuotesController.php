@@ -14,6 +14,10 @@ class QuotesController extends Controller
 {
 	public function create(StoreQuoteRequest $request)
 	{
+		if (!jwtUser())
+		{
+			return response()->json(['message' => 'token not present'], 401);
+		}
 		$file_path = '';
 		if ($request->file('thumbnail'))
 		{
@@ -29,11 +33,15 @@ class QuotesController extends Controller
 			],
 			'thumbnail' => '/storage/' . $file_path,
 		]);
-		return response('nice');
+		return response()->json('Quote created successfully', 201);
 	}
 
 	public function update(UpdateQuoteRequest $request, Quote $quote)
 	{
+		if (!jwtUser())
+		{
+			return response()->json(['message' => 'token not present'], 401);
+		}
 		if ($request->file('thumbnail'))
 		{
 			$file_name = time() . '_' . request()->file('thumbnail')->getClientOriginalName();
@@ -44,8 +52,10 @@ class QuotesController extends Controller
 			'en' => $request->quote_en,
 			'ka' => $request->quote_ka,
 		];
-		$quote->movie_id = $request->movie_id;
-		$quote->update();
+		if ($quote->update())
+		{
+			return response()->json('Quote updated successfully', 200);
+		}
 	}
 
 	public function read()
