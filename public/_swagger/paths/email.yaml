@@ -97,7 +97,14 @@ paths:
                     type: string
                     example:
                       email deleted successfully
+        "401":
+          $ref: "../common.yaml#/components/responses/401"
         "404":
           description: "Error: Not Found"
+        "405":
+          description: "Error: Not Allowed"
+          content:
+            application/json:
+              example: "Deleting primary email is not allowed"
 
 

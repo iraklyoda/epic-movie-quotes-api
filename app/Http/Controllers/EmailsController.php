@@ -63,6 +63,10 @@ class EmailsController extends Controller
 
 	public function destroy(Email $email)
 	{
+		if ($email->primary === 1)
+		{
+			return response()->json('Deleting primary email is not allowed', 405);
+		}
 		if ($email->delete())
 		{
 			return response()->json(['msg' => 'email deleted successfully'], 202);

@@ -35,7 +35,7 @@ Route::group(['controller' => EmailsController::class], function () {
 	Route::post('/profile/create-email', 'create')->name('email.create');
 	Route::get('/profile/email/verify/{id}', 'verify')->name('email.verification');
 	Route::post('/profile/email/make-primary/{email:id}', 'makePrimary')->name('email.make_primary');
-	Route::post('/profile/email/delete/{email:id}', 'destroy')->name('email.delete');
+	Route::post('/profile/email/delete/{email:id}', 'destroy')->middleware('jwt.auth')->name('email.delete');
 });
 
 Route::group(['controller' => GoogleController::class], function () {
