@@ -1,0 +1,22 @@
+components:
+  schemas:
+    Comment:
+      allOf:
+        - $ref: "../common.yaml#/components/schemas/Id"
+        - type: object
+          properties:
+            quote_id:
+              type: integer
+              min: 1
+              example: 1
+            body:
+              type: string
+              example: great quote mid author
+        - $ref: "../common.yaml#/components/schemas/TimeStamps"
+      required:
+        - id
+        - quote_id
+        - body
+        - created_at
+        - updated_at
+

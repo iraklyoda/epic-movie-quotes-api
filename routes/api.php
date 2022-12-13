@@ -69,17 +69,16 @@ Route::group(['controller' => QuotesController::class], function () {
 	Route::post('/quotes/search', 'search')->name('quotes.search');
 	Route::get('/quotes/quote/{quote:id}', 'show')->middleware('jwt.auth')->name('quote.show');
 	Route::post('/quotes/quote/{quote:id}', 'update')->name('quote.update');
-//	Route::get('/quotes/movie/{movie:id}', 'readMovieQuotes')->middleware('jwt.auth')->name('movie_quotes.read');
 	Route::post('/quotes/quote/delete/{quote:id}', 'destroy')->name('quote.delete');
 });
 
 Route::group(['controller' => QuoteCommentsController::class], function () {
-	Route::post('/quotes/{quote:id}/comments/', 'create')->name('quote_comment.create');
+	Route::post('/quotes/{quote:id}/comments', 'create')->name('quote_comment.create');
 });
 
 Route::group(['controller' => NotificationController::class], function () {
-	Route::get('/notifications', 'read')->name('notifications.read');
-	Route::post('/notifications/mark-read', 'markRead')->name('notifications.mark_read');
+	Route::get('/notifications', 'read')->middleware('jwt.auth')->name('notifications.read');
+	Route::post('/notifications/mark-read', 'markRead')->middleware('jwt.auth')->name('notifications.mark_read');
 });
 
 Route::group(['controller' => LikesController::class], function () {

@@ -50,16 +50,21 @@ paths:
   /quotes/quote/{quote:id}:
     $ref: "./_swagger/paths/quote.yaml#/paths/~1quotes~1quote~1{quote:id}"
   /quotes/read:
-    $ref: "./_swagger/paths/quote.yaml#/paths/~1quotes~1read"
+    $ref: "./_swagger/paths/quote.yaml#/paths/~1quotes~1read?page="
   /quotes/get:
     $ref: "./_swagger/paths/quote.yaml#/paths/~1quotes~1get"
   /quotes/search:
-    $ref: "./_swagger/paths/quote.yaml#/paths/~1quotes~1search"
-
-
-
-
-
+    $ref: "./_swagger/paths/quote.yaml#/paths/~1quotes~1search?page="
+  /quotes/quote/delete/{quote:id}:
+    $ref: "./_swagger/paths/quote.yaml#/paths/~1quotes~1quote~1delete~1{quote:id}"
+  /quotes/{quote:id}/comments:
+    $ref: "./_swagger/paths/comment.yaml#/paths/~1quotes~1{quote:id}~1comments"
+  /quote/{quote:id}/like:
+    $ref: "./_swagger/paths/like.yaml#/paths/~1quote~1{quote:id}~1like"
+  /notifications:
+    $ref: "./_swagger/paths/notification.yaml#/paths/~1notifications"
+  /notifications/mark-read:
+    $ref: "./_swagger/paths/notification.yaml#/paths/~1notifications~1mark-read"
 
 components:
   securitySchemes:
@@ -80,3 +85,15 @@ components:
     Quote:
       allOf:
         - $ref: "./_swagger/schemas/quote.yaml#/components/schemas/Quote"
+    Comment:
+      allOf:
+        - $ref: "./_swagger/schemas/comment.yaml#/components/schemas/Comment"
+    Like:
+      allOf:
+        - $ref: "./_swagger/schemas/like.yaml#/components/schemas/Like"
+    Notification:
+      allOf:
+        - $ref: "./_swagger/schemas/notification.yaml#/components/schemas/Notification"
+
+
+

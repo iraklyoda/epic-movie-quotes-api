@@ -3,7 +3,7 @@ paths:
     post:
       tags:
         - Email
-      summary: Creates a new email.
+      summary: Creates a new email
       requestBody:
         required: true
         content:

@@ -1,0 +1,38 @@
+paths:
+  /quotes/{quote:id}/comments:
+    post:
+      parameters:
+        - in: path
+          name: quote:id
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
+          description: The quote ID
+      tags:
+        - Comment
+      summary: Creates a new comment
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              allOf:
+                - type: object
+                  properties:
+                    body:
+                      type: string
+                      example: dude seriously get some help
+              required:
+                - body
+      responses:
+        "201":
+          description: OK
+          content:
+            application/json:
+              example: "Comment created successfully!"
+        "401":
+          $ref: "../common.yaml#/components/responses/401"
+        "422":
+          $ref: "../common.yaml#/components/responses/422"

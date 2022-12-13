@@ -1,0 +1,24 @@
+paths:
+  /notifications:
+    get:
+      tags:
+        - Notification
+      summary: Returns notifications
+      responses:
+        "200":
+          $ref: "../responses/notification.yaml#/components/responses/notifications/200"
+        "401":
+          $ref: "../common.yaml#/components/responses/401"
+  /notifications/mark-read:
+    post:
+      tags:
+        - Notification
+      summary:  Marks all received notifications as read
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              example: "Notifications marked as read successfully!"
+        "401":
+          $ref: "../common.yaml#/components/responses/401"

@@ -13,7 +13,7 @@ class EmailsController extends Controller
 	{
 		if (!jwtUser())
 		{
-			return response()->json('not authorized', 401);
+			return response()->json(['message' => 'token not present'], 401);
 		}
 		$email = Email::create([
 			'email'   => $request->email,

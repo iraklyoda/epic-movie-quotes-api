@@ -14,7 +14,7 @@ paths:
         "201":
           $ref: "../responses/movie.yaml#/components/responses/movie~1create/201"
         "401":
-          $ref: "../common.yaml#/components/responses/422"
+          $ref: "../common.yaml#/components/responses/401"
         "422":
           $ref: "../common.yaml#/components/responses/422"
   /movies/movie/{movie:id}:
@@ -45,6 +45,8 @@ paths:
               example: "Movie updated successfully"
         "404":
           $ref: "../common.yaml#/components/responses/404"
+        "422":
+          $ref: "../common.yaml#/components/responses/422"
     get:
       parameters:
         - in: path
@@ -68,7 +70,7 @@ paths:
     get:
       tags:
         - Movie
-      summary: Returns movies.
+      summary: Returns movies
       responses:
         "200":
           $ref: "../responses/movie.yaml#/components/responses/movie~1read/200"
@@ -78,7 +80,7 @@ paths:
     post:
       tags:
         - Movie
-      summary: Search in movies.
+      summary: Search in movies
       requestBody:
         required: true
         content:

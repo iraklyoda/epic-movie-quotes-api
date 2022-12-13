@@ -17,7 +17,7 @@ class Geo_char implements InvokableRule
 	 */
 	public function __invoke($attribute, $value, $fail)
 	{
-		$pattern = "/^[ა-ჰა-ჰ0-9_.,\-–—IVX&\n '()?]+$/";
+		$pattern = "/^[ა-ჰა-ჰ0-9_.,\-–—IVX&\n '()?:]+$/";
 		if (!preg_match($pattern, $value))
 		{
 			$fail('The :attribute must be in georgian letters');

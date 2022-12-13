@@ -1,0 +1,28 @@
+paths:
+  /quote/{quote:id}/like:
+    post:
+      parameters:
+        - in: path
+          name: quote:id
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
+          description: The quote ID
+      tags:
+        - Like
+      summary: Adds or removes like
+      responses:
+        "201":
+          description: OK
+          content:
+            application/json:
+              example: "Like created successfully!"
+        "202":
+          description: OK
+          content:
+            application/json:
+              example: "Like deleted successfully!"
+        "401":
+          $ref: "../common.yaml#/components/responses/401"

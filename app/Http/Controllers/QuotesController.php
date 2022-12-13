@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreQuoteRequest;
 use App\Http\Requests\StoreSearchRequest;
 use App\Http\Requests\UpdateQuoteRequest;
-use App\Models\Movie;
 use App\Models\Quote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -140,14 +139,15 @@ class QuotesController extends Controller
 		return response()->json($quote);
 	}
 
-	public function readMovieQuotes(Movie $movie)
-	{
-		$quotes = $movie->quotes;
-		return response()->json(Quote::where('movie_id', '=', $movie->id)->orderBy('created_at', 'desc')->with('likes', 'comments')->get());
-	}
-
 	public function destroy(Quote $quote)
 	{
-		$quote->delete();
+		if ($quote->delete())
+		{
+			return response()->json('Quote deleted successfully', 202);
+		}
+		else
+		{
+			return response()->json('Problem deleting film', 404);
+		}
 	}
 }

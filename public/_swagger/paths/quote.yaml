@@ -47,6 +47,8 @@ paths:
           $ref: "../common.yaml#/components/responses/401"
         "404":
           $ref: "../common.yaml#/components/responses/404"
+        "422":
+          $ref: "../common.yaml#/components/responses/422"
     get:
       parameters:
         - in: path
@@ -65,8 +67,15 @@ paths:
           $ref: "../responses/quote.yaml#/components/responses/quotes~1quote~1{quote:id}/200"
         "404":
           $ref: "../common.yaml#/components/responses/404"
-  /quotes/read:
+  /quotes/read?page=:
     get:
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: string
+            min:  1
+            example: 1
       tags:
         - Quote
       summary: Returns all quotes
@@ -102,8 +111,15 @@ paths:
           $ref: "../responses/quote.yaml#/components/responses/quotes~1returned-get/200"
         "401":
           $ref: "../common.yaml#/components/responses/401"
-  /quotes/search:
+  /quotes/search?page=:
     post:
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: string
+            min: 1
+            example: 1
       tags:
         - Quote
       summary: Returns searched quotes
@@ -125,4 +141,27 @@ paths:
           $ref: "../responses/quote.yaml#/components/responses/quotes~1read/200"
         "401":
           $ref: "../common.yaml#/components/responses/401"
-
+  /quotes/quote/delete/{quote:id}:
+    post:
+      parameters:
+        - in: path
+          name: quote:id
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
+          description: The quote ID
+      tags:
+        - Quote
+      summary: Deletes quote
+      responses:
+        "202":
+          description: OK
+          content:
+            application/json:
+              example: "Quote quote successfully"
+        "404":
+          $ref: "../common.yaml#/components/responses/404"
+        "422":
+          $ref: "../common.yaml#/components/responses/422"

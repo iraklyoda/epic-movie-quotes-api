@@ -13,7 +13,6 @@ components:
           application/json:
             schema:
               $ref: "../schemas/movie.yaml#/components/schemas/ReturnedMovie"
-
     movie/search:
       "200":
         description: OK

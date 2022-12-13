@@ -98,7 +98,7 @@ class MoviesController extends Controller
 	{
 		if ($movie->delete())
 		{
-			return response()->json('Movie deleted successfully', 200);
+			return response()->json('Movie deleted successfully', 202);
 		}
 		else
 		{

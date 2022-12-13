@@ -13,22 +13,29 @@ class QuoteCommentsController extends Controller
 {
 	public function create(storeQuoteCommentRequest $request, Quote $quote)
 	{
+		if (!jwtUser())
+		{
+			return response()->json(['message' => 'token not present'], 401);
+		}
 		$comment = [
 			'user_id'  => jwtUser()->id,
 			'body'     => $request->body,
 			'quote_id' => $quote->id,
 		];
-		if (jwtUser()->id !== $request->quote_author)
+		if (jwtUser()->id !== $quote->user_id)
 		{
 			$notification = [
-				'from_id' => $request->user_id,
-				'to_id'   => $request->quote_author,
-				'type'    => $request->type,
+				'from_id' => jwtUser()->id,
+				'to_id'   => $quote->user_id,
+				'type'    => 'comment',
 			];
 			event(new AddNotificationEvent($notification));
 			Notification::create($notification);
 		}
 		event(new AddCommentEvent($comment));
-		Comment::create($comment);
+		if (Comment::create($comment))
+		{
+			return response()->json('Comment created successfully', 201);
+		}
 	}
 }
