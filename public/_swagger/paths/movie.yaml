@@ -65,7 +65,12 @@ paths:
           $ref: "../responses/movie.yaml#/components/responses/movie~1read/200"
         "404":
           $ref: "../common.yaml#/components/responses/404"
-
+        "405":
+          description: "Error: Not Allowed"
+          content:
+            application/json:
+              example:
+                User don't have access to this movie
   /movies/read:
     get:
       tags:

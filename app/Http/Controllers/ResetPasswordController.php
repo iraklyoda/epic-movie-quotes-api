@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreEmailRequest;
 use App\Http\Requests\StorePasswordResetRequest;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Str;
 
 class ResetPasswordController extends Controller
 {
@@ -39,7 +38,7 @@ class ResetPasswordController extends Controller
 			function ($user, $password) {
 				$user->forceFill([
 					'password' => $password,
-				])->setRememberToken(Str::random(60));
+				]);
 				$user->save();
 			}
 		);

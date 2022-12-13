@@ -86,6 +86,10 @@ class MoviesController extends Controller
 
 	public function show(Movie $movie)
 	{
+		if ($movie->user_id !== jwtUser()->id)
+		{
+			return response()->json("User don't have access to this movie", 405);
+		}
 		$movie->genres = json_decode($movie->genres, true);
 		return response()->json($movie->load([
 			'quotes' => function ($query) {

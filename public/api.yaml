@@ -7,7 +7,7 @@ info:
 servers:
   - url: http://127.0.0.1:8000/api
     description: local server
-  - url: http://producation.app/api
+  - url: http://epic-movie-quotes-api.irakli-iobashvili.redberryinternship.ge/api
     description: production server
 
 paths:
@@ -31,6 +31,12 @@ paths:
     $ref: "./_swagger/paths/email.yaml#/paths/~1profile~1email~1make-primary~1{email:id}"
   /profile/email/delete/{email:id}:
     $ref: "./_swagger/paths/email.yaml#/paths/~1profile~1email~1delete~1{email:id}"
+  /forgot-password:
+    $ref: "./_swagger/paths/password.yaml#/paths/~1forgot-password"
+  /forgot-password/{token}:
+    $ref: "./_swagger/paths/password.yaml#/paths/~1reset-password~1{token}"
+  /reset-password:
+    $ref: "./_swagger/paths/password.yaml#/paths/~1reset-password"
   /google/login:
     $ref: "./_swagger/paths/google.yaml#/paths/~1google~1login"
   /google/callback:
@@ -65,7 +71,6 @@ paths:
     $ref: "./_swagger/paths/notification.yaml#/paths/~1notifications"
   /notifications/mark-read:
     $ref: "./_swagger/paths/notification.yaml#/paths/~1notifications~1mark-read"
-
 components:
   securitySchemes:
     bearerAuth:

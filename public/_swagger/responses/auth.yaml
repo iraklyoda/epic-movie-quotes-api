@@ -47,7 +47,7 @@ components:
         description: OK
         content:
           application/json:
-            example:  "user updated"
+            example: "user updated"
       "401":
         $ref: "../common.yaml#/components/responses/401"
       "422":
