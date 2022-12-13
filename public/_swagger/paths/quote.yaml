@@ -1,0 +1,167 @@
+paths:
+  /quotes/create:
+    post:
+      tags:
+        - Quote
+      summary: Creates movie.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "../schemas/quote.yaml#/components/schemas/QuoteForm"
+      responses:
+        "201":
+          $ref: "../responses/quote.yaml#/components/responses/quotes~1create/201"
+        "401":
+          $ref: "../common.yaml#/components/responses/401"
+        "422":
+          $ref: "../common.yaml#/components/responses/422"
+  /quotes/quote/{quote:id}:
+    post:
+      parameters:
+        - in: path
+          name: quote:id
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
+          description: The quote ID
+      tags:
+        - Quote
+      summary: Updates quote information
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "../schemas/quote.yaml#/components/schemas/EditQuoteForm"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              example: "Quote updated successfully"
+        "401":
+          $ref: "../common.yaml#/components/responses/401"
+        "404":
+          $ref: "../common.yaml#/components/responses/404"
+        "422":
+          $ref: "../common.yaml#/components/responses/422"
+    get:
+      parameters:
+        - in: path
+          name: quote:id
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
+          description: The quote ID
+      tags:
+        - Quote
+      summary: Returns single quote
+      responses:
+        "200":
+          $ref: "../responses/quote.yaml#/components/responses/quotes~1quote~1{quote:id}/200"
+        "404":
+          $ref: "../common.yaml#/components/responses/404"
+  /quotes/read?page=:
+    get:
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: string
+            min:  1
+            example: 1
+      tags:
+        - Quote
+      summary: Returns all quotes
+      responses:
+        "200":
+          $ref: "../responses/quote.yaml#/components/responses/quotes~1read/200"
+        "401":
+          $ref: "../common.yaml#/components/responses/401"
+  /quotes/get:
+    post:
+      tags:
+        - Quote
+      summary: Returns certain number of quotes
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              allOf:
+                - type: object
+                  properties:
+                    number:
+                      type: integer
+                      min: 1
+                      example: 1
+                    search:
+                      type: string
+                      example: shrek
+              required:
+                - number
+      responses:
+        "200":
+          $ref: "../responses/quote.yaml#/components/responses/quotes~1returned-get/200"
+        "401":
+          $ref: "../common.yaml#/components/responses/401"
+  /quotes/search?page=:
+    post:
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: string
+            min: 1
+            example: 1
+      tags:
+        - Quote
+      summary: Returns searched quotes
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              allOf:
+                - type: object
+                  properties:
+                    search:
+                      type: string
+                      example: seven samurai
+              required:
+                - search
+      responses:
+        "200":
+          $ref: "../responses/quote.yaml#/components/responses/quotes~1read/200"
+        "401":
+          $ref: "../common.yaml#/components/responses/401"
+  /quotes/quote/delete/{quote:id}:
+    post:
+      parameters:
+        - in: path
+          name: quote:id
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
+          description: The quote ID
+      tags:
+        - Quote
+      summary: Deletes quote
+      responses:
+        "202":
+          description: OK
+          content:
+            application/json:
+              example: "Quote quote successfully"
+        "404":
+          $ref: "../common.yaml#/components/responses/404"
+        "422":
+          $ref: "../common.yaml#/components/responses/422"

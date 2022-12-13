@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreQuoteRequest;
 use App\Http\Requests\StoreSearchRequest;
 use App\Http\Requests\UpdateQuoteRequest;
-use App\Models\Movie;
 use App\Models\Quote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,6 +13,10 @@ class QuotesController extends Controller
 {
 	public function create(StoreQuoteRequest $request)
 	{
+		if (!jwtUser())
+		{
+			return response()->json(['message' => 'token not present'], 401);
+		}
 		$file_path = '';
 		if ($request->file('thumbnail'))
 		{
@@ -29,11 +32,15 @@ class QuotesController extends Controller
 			],
 			'thumbnail' => '/storage/' . $file_path,
 		]);
-		return response('nice');
+		return response()->json('Quote created successfully', 201);
 	}
 
 	public function update(UpdateQuoteRequest $request, Quote $quote)
 	{
+		if (!jwtUser())
+		{
+			return response()->json(['message' => 'token not present'], 401);
+		}
 		if ($request->file('thumbnail'))
 		{
 			$file_name = time() . '_' . request()->file('thumbnail')->getClientOriginalName();
@@ -44,8 +51,10 @@ class QuotesController extends Controller
 			'en' => $request->quote_en,
 			'ka' => $request->quote_ka,
 		];
-		$quote->movie_id = $request->movie_id;
-		$quote->update();
+		if ($quote->update())
+		{
+			return response()->json('Quote updated successfully', 200);
+		}
 	}
 
 	public function read()
@@ -130,14 +139,15 @@ class QuotesController extends Controller
 		return response()->json($quote);
 	}
 
-	public function readMovieQuotes(Movie $movie)
-	{
-		$quotes = $movie->quotes;
-		return response()->json(Quote::where('movie_id', '=', $movie->id)->orderBy('created_at', 'desc')->with('likes', 'comments')->get());
-	}
-
 	public function destroy(Quote $quote)
 	{
-		$quote->delete();
+		if ($quote->delete())
+		{
+			return response()->json('Quote deleted successfully', 202);
+		}
+		else
+		{
+			return response()->json('Problem deleting film', 404);
+		}
 	}
 }

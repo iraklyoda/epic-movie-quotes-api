@@ -7,7 +7,7 @@ paths:
       requestBody:
         required: true
         content:
-          application/json:
+          multipart/form-data:
             schema:
               allOf:
                 - type: object
@@ -24,6 +24,11 @@ paths:
                     password_confirmation:
                       type: password
                       example: testPassword
+              required:
+                - username
+                - email
+                - password
+                - password_confirmation
       responses:
         "201":
           $ref: "../responses/auth.yaml#/components/responses/register/201"
@@ -37,7 +42,7 @@ paths:
       requestBody:
         required: true
         content:
-          application/json:
+          multipart/form-data:
             schema:
               allOf:
                 - type: object
@@ -73,29 +78,38 @@ paths:
       requestBody:
         required: true
         content:
-          application/json:
+          multipart/form-data:
             schema:
-              type: object
-              properties:
-                username:
-                  type: string
-                  example: yojimbo
-                new_password:
-                    type: password
-                    example: newPassword
-                new_password_confirmation:
-                    type: password
-                    example: newPassword
-                profile_picture:
-                  type: string
-                  format: binary
+              allOf:
+                - type: object
+                  properties:
+                    username:
+                      type: string
+                      example: yojimbo
+                    new_password:
+                      type: password
+                      example: newPassword
+                    new_password_confirmation:
+                      type: password
+                      example: newPassword
+                    profile_picture:
+                      type: string
+                      format: binary
       responses:
         "200":
-          description: "user updated"
+          $ref: "../responses/auth.yaml#/components/responses/profile~1update-user/200"
+        "401":
+          $ref: "../responses/auth.yaml#/components/responses/profile~1update-user/401"
+        "422":
+          $ref: "../responses/auth.yaml#/components/responses/profile~1update-user/422"
+
+  /logout:
+    get:
+      tags:
+        - Auth
+      summary: Logs out user.
+      responses:
+        "200":
+          description: success
         "401":
           $ref: "../common.yaml#/components/responses/401"
-        "403":
-          $ref: "../responses/auth.yaml#/components/responses/login/403"
-        "404":
-          $ref: "../common.yaml#/components/responses/404"
-

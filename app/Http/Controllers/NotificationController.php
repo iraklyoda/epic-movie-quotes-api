@@ -16,6 +16,6 @@ class NotificationController extends Controller
 	{
 		$notifications = Notification::where('read', '=', 0)->where('to_id', JwtUser()->id);
 		$notifications->update(['read' => 1]);
-		return response()->json('marked', 200);
+		return response()->json('Notifications marked as read successfully!', 200);
 	}
 }

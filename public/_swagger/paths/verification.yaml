@@ -1,0 +1,21 @@
+paths:
+  /email/verify/{id}:
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
+          description: The email ID
+      tags:
+        - Email verification
+      summary:  Verifies email
+      responses:
+        "200":
+          description: OK
+        "410":
+          $ref: "../common.yaml#/components/responses/410"
+

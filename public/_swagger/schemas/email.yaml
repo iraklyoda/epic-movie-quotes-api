@@ -1,0 +1,28 @@
+components:
+  schemas:
+    Email:
+      allOf:
+        - $ref: "../common.yaml#/components/schemas/Id"
+        - type: object
+          properties:
+            email:
+              type: string
+              example: yoda@tatooine.com
+            user_id:
+              type: integer
+              minimum: 1
+              example: 1
+            primary:
+              type: boolean
+              example: 1
+            is_email_verified:
+              type: boolean
+              example: 1
+        - $ref: "../common.yaml#/components/schemas/TimeStamps"
+      required:
+        - id
+        - email
+        - user_id
+        - primary
+        - created_at
+        - updated_at

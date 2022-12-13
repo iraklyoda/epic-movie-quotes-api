@@ -13,6 +13,10 @@ class LikesController extends Controller
 {
 	public function create(Request $request, Quote $quote)
 	{
+		if (!jwtUser())
+		{
+			return response()->json(['message' => 'token not present'], 401);
+		}
 		$like = Like::where('user_id', JwtUser()->id)->where('quote_id', $quote->id)->first();
 		if (!$like)
 		{
@@ -20,25 +24,25 @@ class LikesController extends Controller
 				'user_id'  => jwtUser()->id,
 				'quote_id' => $quote->id,
 			];
-			if (jwtUser()->id !== $request->quote_author)
+			if (jwtUser()->id !== $quote->user_id)
 			{
 				$notification = [
-					'from_id' => $request->user_id,
-					'to_id'   => $request->quote_author,
-					'type'    => $request->type,
+					'from_id' => jwtUser()->id,
+					'to_id'   => $quote->user_id,
+					'type'    => 'like',
 				];
 				event(new AddNotificationEvent($notification));
 				Notification::create($notification);
 			}
 			event(new AddLikeEvent($like));
 			Like::create($like);
-			return response()->json('liked');
+			return response()->json('Like created successfully', 201);
 		}
 		else
 		{
 			event(new AddLikeEvent($like));
 			$like->delete();
-			return response()->json('deleted');
+			return response()->json('Like deleted successfully', 202);
 		}
 	}
 }

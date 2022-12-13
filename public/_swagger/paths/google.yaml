@@ -1,0 +1,23 @@
+paths:
+  /google/login:
+    get:
+      tags:
+        - Google
+      summary: Gets Google driver.
+      responses:
+        "202":
+          description: OK
+        "404":
+          description: Not Found
+  /google/callback:
+    get:
+      tags:
+        - Google
+      summary: Authorize or register Google user.
+      responses:
+        "202":
+          description: OK
+        "404":
+          description: "Error: Not Found"
+        "500":
+          description: "Error: Internal Server Error"

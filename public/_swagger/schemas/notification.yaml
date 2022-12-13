@@ -1,0 +1,92 @@
+components:
+  schemas:
+    Notification:
+      allOf:
+        - $ref: "../common.yaml#/components/schemas/Id"
+        - type: object
+          properties:
+            from_id:
+              type: integer
+              min: 1
+              example: 1
+            to_id:
+              type: integer
+              min: 1
+              example: 1
+            type:
+              type: string
+              example: like
+            read:
+              type: boolean
+              example: 1
+        - $ref: "../common.yaml#/components/schemas/TimeStamps"
+      required:
+        - id
+        - from_id
+        - to_id
+        - type
+        - read
+        - created_at
+        - updated_at
+    NotificationResponse:
+      type: array
+      example: [
+        {
+          "id": 4,
+          "from_id": 2,
+          "to_id": 1,
+          "type": "comment",
+          "read": 0,
+          "created_at": "2022-12-13T01:48:09.000000Z",
+          "updated_at": "2022-12-13T01:48:09.000000Z",
+          "sender": {
+            "id": 2,
+            "username": "yoda",
+            "email": "yoda@irakli.ge",
+            "email_verified_at": "2022-12-13 01:35:54",
+            "google_id": null,
+            "profile_picture": "/storage/images/profile/darth_vader_default_profile.png",
+            "created_at": "2022-12-13T01:35:54.000000Z",
+            "updated_at": "2022-12-13T01:35:54.000000Z"
+          }
+        },
+        {
+          "id": 3,
+          "from_id": 2,
+          "to_id": 1,
+          "type": "comment",
+          "read": 0,
+          "created_at": "2022-12-13T01:48:05.000000Z",
+          "updated_at": "2022-12-13T01:48:05.000000Z",
+          "sender": {
+            "id": 2,
+            "username": "yoda",
+            "email": "yoda@irakli.ge",
+            "email_verified_at": "2022-12-13 01:35:54",
+            "google_id": null,
+            "profile_picture": "/storage/images/profile/darth_vader_default_profile.png",
+            "created_at": "2022-12-13T01:35:54.000000Z",
+            "updated_at": "2022-12-13T01:35:54.000000Z"
+          }
+        },
+        {
+          "id": 2,
+          "from_id": 2,
+          "to_id": 1,
+          "type": "like",
+          "read": 0,
+          "created_at": "2022-12-13T01:48:03.000000Z",
+          "updated_at": "2022-12-13T01:48:03.000000Z",
+          "sender": {
+            "id": 2,
+            "username": "yoda",
+            "email": "yoda@irakli.ge",
+            "email_verified_at": "2022-12-13 01:35:54",
+            "google_id": null,
+            "profile_picture": "/storage/images/profile/darth_vader_default_profile.png",
+            "created_at": "2022-12-13T01:35:54.000000Z",
+            "updated_at": "2022-12-13T01:35:54.000000Z"
+          }
+        }
+      ]
+

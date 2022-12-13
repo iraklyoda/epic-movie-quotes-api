@@ -1,0 +1,30 @@
+components:
+  responses:
+    quotes/create:
+      "201":
+        description: OK
+        content:
+          application/json:
+            example: "Quote created successfully!"
+    quotes/quote/{quote:id}:
+      "200":
+        description: OK
+        content:
+          application/json:
+            schema:
+              $ref: "../schemas/quote.yaml#/components/schemas/ReturnedQuote"
+    quotes/read:
+      "200":
+        description: OK
+        content:
+          application/json:
+            schema:
+              $ref: "../schemas/quote.yaml#/components/schemas/ReturnedQuotes"
+    quotes/returned-get:
+      "200":
+        description: OK
+        content:
+          application/json:
+            schema:
+              $ref: "../schemas/quote.yaml#/components/schemas/ReturnedQuotesGet"
+

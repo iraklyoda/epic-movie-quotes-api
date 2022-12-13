@@ -40,6 +40,19 @@ components:
                 "emails": []
               }
             }
+      "401":
+        $ref: "../common.yaml#/components/responses/401"
+    profile/update-user:
+      "200":
+        description: OK
+        content:
+          application/json:
+            example:  "user updated"
+      "401":
+        $ref: "../common.yaml#/components/responses/401"
+      "422":
+        $ref: "../common.yaml#/components/responses/422"
+
 
 
 
