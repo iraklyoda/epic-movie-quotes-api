@@ -65,7 +65,12 @@ paths:
     $ref: "./_swagger/paths/notification.yaml#/paths/~1notifications"
   /notifications/mark-read:
     $ref: "./_swagger/paths/notification.yaml#/paths/~1notifications~1mark-read"
-
+  /forgot-password:
+    $ref: "./_swagger/paths/password.yaml#/paths/~1forgot-password"
+  /forgot-password/{token}:
+    $ref: "./_swagger/paths/password.yaml#/paths/~1reset-password~1{token}"
+  /reset-password:
+    $ref: "./_swagger/paths/password.yaml#/paths/~1reset-password"
 components:
   securitySchemes:
     bearerAuth:
