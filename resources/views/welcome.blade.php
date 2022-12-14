@@ -21,17 +21,7 @@
         </style>
     </head>
     <body class="antialiased">
-    <form action="/movies/create" method="POST" enctype="multipart/form-data">
-        @csrf
-        <input type="text" name="title_en"> <br/>
-        <input type="text" name="title_ka"> <br/>
-        <input type="text" name="director_en"> <br/>
-        <input type="text" name="director_ka"> <br/>
-        <input type="text" name="description_en"> <br/>
-        <input type="text" name="description_ka"> <br/>
-        <input type="file" name="image">
-        <button>Submit</button>
-    </form>
+        <h1>Epic Movie Quotes API</h1>
     </body>
 </html>
 

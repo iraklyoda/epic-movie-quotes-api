@@ -10,7 +10,7 @@
 
 ## Introduction
 ### Epic Movie Quotes API
-Social Media Web-application about Movie Quotes, where you can
+Api of Social Media Web-application about Movie Quotes, where you can
 log in, register and add, update, delete movies and their quotes, post and comment on your friends posts,
 update profile and much more...
 
@@ -21,7 +21,6 @@ In order to make this app work on your local environment you will need:
 * nodeJS => 14
 
 ## Tech Stack
-* Vue 3
 * Laravel 9
 
 ## Getting Started
@@ -38,14 +37,19 @@ In order to make this app work on your local environment you will need:
   cp .env.example .env
   ```
 * Set up .env file
-* Install npm and run tailwindcss
   ```bash
   npm install
   npm run build
   ```
+
 * And finally host on your local server
   ```bash
   php artisan serve
+  ```
+
+* In order to use swagger run
+  ```bash
+  npm run dev
   ```
 
 
@@ -57,7 +61,7 @@ Here's what you will need to do to work on this project:
   ```
 
 ## Deployment
-* [On server](https://epic-movie-quotes.irakli-iobashvili.redberryinternship.ge/api)
+* [On server](https://epic-movie-quotes-api.irakli-iobashvili.redberryinternship.ge/)
 * login though ssh
 * PHP 8.1.9
 * Node.js v14.20.0
@@ -66,5 +70,5 @@ Here's what you will need to do to work on this project:
 * SSL LetsEctypt certificate
 
 ## Resources
-* [drawSQL](#)
-* [Figma](#)
+* [drawSQL](https://drawsql.app/teams/iraklyodas-team/diagrams/epic-movie-quotes 'drawSQL')
+* [Figma](https://www.figma.com/file/5uMXCg3itJwpzh9cVIK3hA/Movie-Quotes-Bootcamp-assignment?node-id=0%3A1&t=1xOTbayXe1tnXX8v-0 'Figma')

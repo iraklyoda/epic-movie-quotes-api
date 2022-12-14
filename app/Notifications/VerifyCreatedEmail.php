@@ -59,6 +59,7 @@ class VerifyCreatedEmail extends Notification
 
 		return (new MailMessage)
 			->view('verifyCreatedEmail', ['url' => $url, 'email' => $email_body])
+			->from('moviequotes@redberry.ge', 'Movie Quotes')
 			->action('Notification Action', $url)
 			->line('Thank you for using our application!')
 			->subject('Verify Email Address');
