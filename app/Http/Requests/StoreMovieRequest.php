@@ -13,10 +13,10 @@ class StoreMovieRequest extends FormRequest
 		return [
 			'image'          => ['required', 'image'],
 			'genres'         => ['required'],
-			'title_en'       => ['required', 'min:3', 'max:30', new Eng_char],
-			'title_ka'       => ['required', 'min:3', 'max:30', new Geo_char],
-			'director_en'    => ['required', 'min:3', 'max:30', new Eng_char],
-			'director_ka'    => ['required', 'min:3', 'max:30', new Geo_char],
+			'title_en'       => ['required', 'min:3', 'max:100', new Eng_char],
+			'title_ka'       => ['required', 'min:3', 'max:100', new Geo_char],
+			'director_en'    => ['required', 'min:3', 'max:50', new Eng_char],
+			'director_ka'    => ['required', 'min:3', 'max:50', new Geo_char],
 			'description_en' => ['required', 'min:3', new Eng_char],
 			'description_ka' => ['required', 'min:3', new Geo_char],
 		];
