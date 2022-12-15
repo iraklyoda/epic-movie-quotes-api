@@ -17,7 +17,7 @@ class Eng_char implements InvokableRule
 	 */
 	public function __invoke($attribute, $value, $fail)
 	{
-		$pattern = "/^[A-Za-z0-9_.,\-–—\n 'ō()?:]+$/";
+		$pattern = "/^[A-Za-z0-9_.,\-–—\n 'ō()?:ä\"]+$/";
 		if (!preg_match($pattern, $value))
 		{
 			$fail('The :attribute must be in english letters');

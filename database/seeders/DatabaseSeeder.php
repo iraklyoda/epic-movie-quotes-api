@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
 			'username'        => 'irakli',
 			'email'           => 'irakli@irakli.ge',
 			'password'        => 'irakliirakli',
-			'profile_picture' => '/storage/images/profile/darth_vader_default_profile.png',
+			'profile_picture' => '/images/profile/darth_vader_default_profile.png',
 		]);
 		$user->markEmailAsVerified();
 		Email::create([
@@ -41,7 +41,7 @@ class DatabaseSeeder extends Seeder
 			'username'        => 'yoda',
 			'email'           => 'yoda@irakli.ge',
 			'password'        => 'irakliirakli',
-			'profile_picture' => '/storage/images/profile/darth_vader_default_profile.png',
+			'profile_picture' => '/images/profile/darth_vader_default_profile.png',
 		]);
 		$user_two->markEmailAsVerified();
 		Email::create([
@@ -52,7 +52,7 @@ class DatabaseSeeder extends Seeder
 		]);
 
 		$shrek = Movie::create([
-			'image'   => '/storage/images/movies/shrek.jpg',
+			'image'   => '/images/movies/shrek.jpg',
 			'genres'  => json_encode(['Animation', 'Family']),
 			'user_id' => $user->id,
 			'title'   => [
@@ -69,7 +69,7 @@ class DatabaseSeeder extends Seeder
 			],
 		]);
 		$sevenSamurai = Movie::create([
-			'image'   => '/storage/images/movies/seven_samurai.jpg',
+			'image'   => '/images/movies/seven_samurai.jpg',
 			'genres'  => json_encode(['Action', 'Adventure', 'Epic']),
 			'user_id' => $user_two->id,
 			'title'   => [
@@ -86,7 +86,7 @@ class DatabaseSeeder extends Seeder
 			],
 		]);
 		$harakiri = Movie::create([
-			'image'   => '/storage/images/movies/harakiri.jpg',
+			'image'   => '/images/movies/harakiri.jpg',
 			'genres'  => json_encode(['Drama', 'Epic', 'Jidaigeki']),
 			'user_id' => $user->id,
 			'title'   => [
@@ -110,7 +110,7 @@ class DatabaseSeeder extends Seeder
 				'en' => 'Ogres are like onions',
 				'ka' => 'ოგრები ხახვებივით არიან',
 			],
-			'thumbnail' => '/storage/images/quotes/shrek_ogres.jpg',
+			'thumbnail' => '/images/quotes/shrek_ogres.jpg',
 		]);
 
 		Quote::create([
@@ -120,7 +120,7 @@ class DatabaseSeeder extends Seeder
 				'en' => 'The suspicious mind conjures its own demons.',
 				'ka' => 'ეჭვიანი გონება საკუთარ დემონებს თავად შეიპყრობს',
 			],
-			'thumbnail' => '/storage/images/quotes/harakiri_suspicious.jpg',
+			'thumbnail' => '/images/quotes/harakiri_suspicious.jpg',
 		]);
 		Quote::create([
 			'user_id'  => $user->id,
@@ -129,7 +129,7 @@ class DatabaseSeeder extends Seeder
 				'en' => 'After all, this thing we call samurai honor is ultimately nothing but a facade',
 				'ka' => 'საბოლოოდ ის რასაც სამურაის ღირსებას ვუწოდებთ მხოლოდ და მხოლოდ ფასადია',
 			],
-			'thumbnail' => '/storage/images/quotes/harakiri_facade.jpeg',
+			'thumbnail' => '/images/quotes/harakiri_facade.jpeg',
 		]);
 		Quote::create([
 			'user_id'  => $user_two->id,
@@ -138,7 +138,7 @@ class DatabaseSeeder extends Seeder
 				'en' => "Don't you see? A real sword will kill you",
 				'ka' => 'ვერ ხვდები? ნამდვილი ხმალი მოგკლავდა',
 			],
-			'thumbnail' => '/storage/images/quotes/seven_samurai_sword.png',
+			'thumbnail' => '/images/quotes/seven_samurai_sword.png',
 		]);
 		Quote::create([
 			'user_id'  => $user->id,
@@ -147,7 +147,7 @@ class DatabaseSeeder extends Seeder
 				'en' => 'Swordsmanship untested in battle is like the art of swimming mastered on land.',
 				'ka' => 'ხმლის ოსტატობა გამოუცდელი ბრძოლაში იგივეა რაც ცურვის ხელოვნება მიწაზე აითვისო',
 			],
-			'thumbnail' => '/storage/images/quotes/harakiri_swordsmanship.jpg',
+			'thumbnail' => '/images/quotes/harakiri_swordsmanship.jpg',
 		]);
 	}
 }

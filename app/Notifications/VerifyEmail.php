@@ -68,7 +68,8 @@ class VerifyEmail extends Notification
 	{
 		return (new MailMessage)
 			->view('email', ['url' => $url, 'user' => $notifiable->username])
-			->subject(Lang::get('Verify Email Address'));
+			->subject(Lang::get('Verify Email Address'))
+			->from('moviequotes@redberry.ge', 'Movie Quotes');
 	}
 
 	/**
